@@ -1,0 +1,77 @@
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-app: #FAFAF8;
+    --bg-surface: #FFFFFF;
+    --bg-surface-subtle: #F4F5F7;
+    --bg-surface-hover: #EFEFEF;
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --text-tertiary: #94A3B8;
+    --border-subtle: #E2E8F0;
+    --border-strong: #CBD5E1;
+    --brand-accent: #0088FF;
+    --brand-accent-hover: #0066CC;
+    --brand-accent-subtle: #E0F2FE;
+    --brand-gold: #F5B000;
+    --brand-gold-hover: #D99B00;
+    --brand-gold-subtle: #FEF9C3;
+    --status-success: #10B981;
+    --status-success-bg: #ECFDF5;
+    --status-warning: #F59E0B;
+    --status-warning-bg: #FFFBEB;
+    --status-danger: #EF4444;
+    --status-danger-bg: #FEF2F2;
+  }
+
+  body {
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Utilities for Wipeit Design System */
+.bg-app { background-color: var(--bg-app); }
+.bg-surface { background-color: var(--bg-surface); }
+.bg-surface-subtle { background-color: var(--bg-surface-subtle); }
+.bg-surface-hover { background-color: var(--bg-surface-hover); }
+
+.text-primary-dark { color: var(--text-primary); }
+.text-secondary-gray { color: var(--text-secondary); }
+
+.border-subtle { border-color: var(--border-subtle); }
+.border-strong { border-color: var(--border-strong); }
+
+.bg-accent { background-color: var(--brand-accent); }
+.bg-accent-hover:hover { background-color: var(--brand-accent-hover); }
+.bg-accent-subtle { background-color: var(--brand-accent-subtle); }
+.text-accent { color: var(--brand-accent); }
+.border-accent { border-color: var(--brand-accent); }
+
+.bg-gold { background-color: var(--brand-gold); }
+.text-gold { color: var(--brand-gold); }
+.border-gold { border-color: var(--brand-gold); }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F5F7;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
