@@ -42,19 +42,19 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-            className="relative w-full max-w-lg mx-auto bg-white rounded-t-3xl shadow-2xl z-10 overflow-hidden border-t border-[#E5E7EB] max-h-[85vh] flex flex-col"
+            className="relative w-full max-w-lg mx-auto bg-white rounded-t-3xl shadow-2xl z-50 overflow-hidden border-t border-[#E2E8F0] max-h-[85dvh] flex flex-col pb-[env(safe-area-inset-bottom,12px)]"
           >
             {/* Drag Handle Indicator */}
             <div className="w-full flex items-center justify-center pt-3 pb-1">
-              <div className="w-10 h-1.5 bg-[#E5E7EB] rounded-full" />
+              <div className="w-10 h-1.5 bg-[#CBD5E1] rounded-full" />
             </div>
 
             {title && (
-              <div className="flex items-center justify-between px-5 py-3 border-b border-[#E5E7EB]">
-                <h3 className="text-base font-semibold text-[#18181B]">{title}</h3>
+              <div className="flex items-center justify-between px-5 py-3 border-b border-[#E2E8F0] shrink-0">
+                <h3 className="text-base font-bold text-[#0F172A]">{title}</h3>
                 <button
                   onClick={onClose}
-                  className="p-1 text-[#6B7280] hover:text-[#18181B] hover:bg-[#F4F5F7] rounded-lg transition-colors"
+                  className="p-1 text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] rounded-lg transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
