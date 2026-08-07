@@ -2,12 +2,14 @@ import React from 'react';
 import { motion, HTMLMotionProps } from 'framer-motion';
 import { cn } from '../../utils/cn';
 
-interface ButtonProps extends HTMLMotionProps<'button'> {
+export interface ButtonProps extends HTMLMotionProps<'button'> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
   icon?: React.ReactNode;
   fullWidth?: boolean;
+  className?: string;
+  disabled?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -20,14 +22,14 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed select-none';
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed select-none cursor-pointer';
 
   const variants = {
-    primary: 'bg-[#2457FF] text-white hover:bg-[#1D46D8] active:bg-[#1D46D8] focus:ring-[#2457FF] shadow-sm',
-    secondary: 'bg-[#F4F5F7] text-[#18181B] hover:bg-[#EFEFEF] active:bg-[#E5E7EB] focus:ring-[#18181B]',
-    outline: 'border border-[#E5E7EB] bg-transparent text-[#18181B] hover:bg-[#F4F5F7] focus:ring-[#2457FF]',
-    ghost: 'bg-transparent text-[#6B7280] hover:bg-[#F4F5F7] hover:text-[#18181B]',
-    destructive: 'bg-[#FEF2F2] text-[#E5484D] hover:bg-[#E5484D] hover:text-white focus:ring-[#E5484D]'
+    primary: 'bg-[#0088FF] text-white hover:bg-[#0066CC] active:bg-[#0066CC] focus:ring-[#0088FF] shadow-sm',
+    secondary: 'bg-[#F4F5F7] text-[#0F172A] hover:bg-[#E2E8F0] active:bg-[#CBD5E1] focus:ring-[#0F172A]',
+    outline: 'border border-[#E2E8F0] bg-transparent text-[#0F172A] hover:bg-[#F8FAFC] focus:ring-[#0088FF]',
+    ghost: 'bg-transparent text-[#64748B] hover:bg-[#F8FAFC] hover:text-[#0F172A]',
+    destructive: 'bg-[#FEF2F2] text-[#EF4444] hover:bg-[#EF4444] hover:text-white focus:ring-[#EF4444]'
   };
 
   const sizes = {
