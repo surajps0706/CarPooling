@@ -88,6 +88,17 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     color: 'Attitude Black',
     registrationNumber: 'KA05AB1234',
     isDefault: true
+  },
+  {
+    id: 'VEH-04',
+    customerId: 'CUST-1001',
+    make: 'Royal Enfield',
+    model: 'Hunter 350',
+    year: 2024,
+    type: 'bike',
+    color: 'Dapper Ash',
+    registrationNumber: 'KA01BK2024',
+    isDefault: false
   }
 ];
 
@@ -185,35 +196,64 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     name: 'Car Wash',
     slug: 'car-wash',
     iconName: 'Droplets',
-    description: 'High-pressure exterior wash and foam shampoo services'
+    description: 'High-pressure exterior wash and foam shampoo services',
+    targetVehicle: 'car'
   },
   {
     id: 'CAT-02',
     name: 'Interior Cleaning',
     slug: 'interior-cleaning',
     iconName: 'Sparkles',
-    description: 'Deep cabin vacuuming, fabric shampoo, and dashboard care'
+    description: 'Deep cabin vacuuming, fabric shampoo, and dashboard care',
+    targetVehicle: 'car'
   },
   {
     id: 'CAT-03',
     name: 'Detailing & Polish',
     slug: 'detailing-polish',
     iconName: 'Shield',
-    description: 'Machine polishing, wax protection, and paint restoration'
+    description: 'Machine polishing, wax protection, and paint restoration',
+    targetVehicle: 'car'
   },
   {
     id: 'CAT-04',
     name: 'Ceramic Coating',
     slug: 'ceramic-coating',
     iconName: 'Gem',
-    description: 'Nano ceramic spray & 9H multi-year paint protection'
+    description: 'Nano ceramic spray & 9H multi-year paint protection',
+    targetVehicle: 'car'
   },
   {
     id: 'CAT-05',
-    name: 'Bike Care',
-    slug: 'bike-care',
-    iconName: 'Bike',
-    description: 'Specialized motorcycle wash, chain lube, and helmet sanitization'
+    name: 'Bike Wash & Detailing',
+    slug: 'bike-wash-detailing',
+    iconName: 'Droplets',
+    description: 'Specialized motorcycle snow wash, foam bath, and ceramic polish',
+    targetVehicle: 'bike'
+  },
+  {
+    id: 'CAT-06',
+    name: 'Engine & Maintenance',
+    slug: 'bike-engine-oil',
+    iconName: 'Sparkles',
+    description: 'Engine oil replacement, flush, air filter & spark plug service',
+    targetVehicle: 'bike'
+  },
+  {
+    id: 'CAT-07',
+    name: 'Chain & Drive Care',
+    slug: 'bike-chain-drive',
+    iconName: 'Shield',
+    description: 'Chain cleaning, PTFE lube, clutch & gear adjustment',
+    targetVehicle: 'bike'
+  },
+  {
+    id: 'CAT-08',
+    name: 'Battery & Electrical',
+    slug: 'bike-battery-electrical',
+    iconName: 'Gem',
+    description: 'Battery health test, terminal polish, lighting & horn audit',
+    targetVehicle: 'bike'
   }
 ];
 
@@ -366,7 +406,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   // BIKE SERVICES SECTION
   {
     id: 'SRV-BK-01',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-06',
     name: '🛢️ Engine Oil Change & Flush',
     slug: 'engine-oil-change',
     description: 'High-grade synthetic/semi-synthetic engine oil replacement with sludge flush and drain plug washer check.',
@@ -388,7 +428,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-02',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-08',
     name: '🔋 Battery Check & Terminal Polish',
     slug: 'battery-check',
     description: 'Digital voltage test, terminal corrosion removal, electrolyte level top-up, and charging health audit.',
@@ -408,7 +448,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-03',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-07',
     name: '🧰 Clutch & Gear Service',
     slug: 'clutch-gear-service',
     description: 'Clutch cable free-play adjustment, friction plate health check, and smooth gear selector lever lubrication.',
@@ -428,7 +468,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-04',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-06',
     name: '🏍️ Engine Tuning & RPM Calibration',
     slug: 'engine-tuning',
     description: 'Air-fuel mixture optimization, idle RPM setup, throttle body cleaning, and engine response fine-tuning.',
@@ -449,7 +489,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-05',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-06',
     name: '🔩 Suspension & Telescopic Fork Check',
     slug: 'suspension-check',
     description: 'Front telescopic fork oil seal leak audit, rear shock absorber preload setting, and swingarm bush check.',
@@ -469,7 +509,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-06',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-08',
     name: '💡 Electrical System & Lighting Audit',
     slug: 'electrical-check',
     description: 'Complete headlight, tail light, indicator, horn, and ignition switch wiring health diagnostic.',
@@ -489,7 +529,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-07',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-06',
     name: '🌫️ Air Filter Cleaning & Service',
     slug: 'air-filter-cleaning',
     description: 'High-pressure air blowout for foam/paper filters, oil soaking for performance filters, and airbox sanitization.',
@@ -509,7 +549,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-08',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-06',
     name: '🔥 Spark Plug Cleaning & Gap Service',
     slug: 'spark-plug-service',
     description: 'Carbon deposit removal, electrode wire brushing, feeder gauge gap calibration, and anti-seize thread treatment.',
@@ -529,7 +569,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-09',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-07',
     name: '⛓️ Chain Cleaning & Heavy-Duty Lubrication',
     slug: 'chain-cleaning-lube',
     description: 'Kerosene/degreaser chain wash with 3-sided grunge brush, O-ring safe synthetic chain lube application, and slack adjustment.',
@@ -550,7 +590,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-10',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-06',
     name: '🛞 Tyre Pressure & Brake Pad Care',
     slug: 'tyre-brake-care',
     description: 'Front & rear disc pad thickness measurement, drum shoe de-glazing, brake fluid reservoir top-up, and tread depth check.',
@@ -570,7 +610,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
   },
   {
     id: 'SRV-BK-11',
-    categoryId: 'CAT-05',
+    categoryId: 'CAT-06',
     name: '⚙️ Spare Parts & Hardware Fitment',
     slug: 'spare-parts-fitment',
     description: 'On-demand replacement of cables, mirrors, brake levers, footpegs, indicators, or bulbs with genuine OEM parts.',

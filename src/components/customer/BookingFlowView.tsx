@@ -56,7 +56,8 @@ export const BookingFlowView: React.FC = () => {
     '04:30 PM - 06:00 PM'
   ];
 
-  const basePrice = service.pricing[activeVehicle.type] || service.pricing.sedan || 449;
+  const rawPrice = service.pricing[activeVehicle.type];
+  const basePrice = (rawPrice && rawPrice > 0) ? rawPrice : (service.pricing.bike || service.pricing.sedan || 199);
   const addonsTotal = stateAddons.reduce((acc, a) => acc + a.price, 0);
   const subtotal = basePrice + addonsTotal;
 

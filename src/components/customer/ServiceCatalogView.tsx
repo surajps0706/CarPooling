@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Check, Clock, ChevronRight, Droplets, Sparkles, Shield, Gem, Bike } from 'lucide-react';
+import { Check, Clock, ChevronRight, Droplets, Sparkles, Shield, Gem, Bike, Wrench, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '../../context/BookingContext';
 import { Button } from '../ui/Button';
@@ -14,6 +14,8 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   Shield: <Shield className="w-3.5 h-3.5" />,
   Gem: <Gem className="w-3.5 h-3.5" />,
   Bike: <Bike className="w-3.5 h-3.5" />,
+  Wrench: <Wrench className="w-3.5 h-3.5" />,
+  Zap: <Zap className="w-3.5 h-3.5" />,
 };
 
 const CATEGORY_COLORS: Record<string, { badge: string; text: string }> = {
@@ -22,20 +24,24 @@ const CATEGORY_COLORS: Record<string, { badge: string; text: string }> = {
   'CAT-03': { badge: 'bg-amber-100 text-amber-700',   text: 'text-amber-600' },
   'CAT-04': { badge: 'bg-cyan-100 text-cyan-700',     text: 'text-cyan-600' },
   'CAT-05': { badge: 'bg-emerald-100 text-emerald-700', text: 'text-emerald-600' },
+  'CAT-06': { badge: 'bg-orange-100 text-orange-700', text: 'text-orange-600' },
+  'CAT-07': { badge: 'bg-teal-100 text-teal-700',     text: 'text-teal-600' },
+  'CAT-08': { badge: 'bg-indigo-100 text-indigo-700', text: 'text-indigo-600' },
 };
 
 export const ServiceCatalogView: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { activeVehicle } = useBooking();
+  const { currentCustomer, vehicles, activeVehicle, setActiveVehicle } = useBooking();
+
+  const isBikeMode = activeVehicle.type === 'bike';
 
   const navState = location.state as { categoryId?: string; categoryIds?: string[] } | null;
 
-  // Pre-select category if navigated from home screen — single cat or group (array)
+  // Pre-select category if navigated from home screen
   const [activeCategoryId, setActiveCategoryId] = useState<string>(
     navState?.categoryId ?? 'ALL'
   );
-  // Multi-category filter (used when tapping a vehicle group header)
   const [activeCategoryIds, setActiveCategoryIds] = useState<string[] | null>(
     navState?.categoryIds ?? null
   );
@@ -50,26 +56,66 @@ export const ServiceCatalogView: React.FC = () => {
       setActiveCategoryId('ALL');
     }
   }, [location.state]);
+
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<AddonItem[]>([]);
   const [isAddonSheetOpen, setIsAddonSheetOpen] = useState<boolean>(false);
 
+  // Filter Categories by vehicle mode
+  const relevantCategories = SERVICE_CATEGORIES.filter((c) =>
+    isBikeMode ? c.targetVehicle === 'bike' : c.targetVehicle === 'car' || !c.targetVehicle
+  );
+
   const tabs = [
     { id: 'ALL', name: 'All', iconName: 'Sparkles' },
-    ...SERVICE_CATEGORIES
+    ...relevantCategories
   ];
 
-  // When user picks a tab, clear the group filter
+  const handleToggleMode = (mode: 'car' | 'bike') => {
+    setActiveCategoryId('ALL');
+    setActiveCategoryIds(null);
+    if (mode === 'bike') {
+      const bikeVeh = vehicles.find((v) => v.type === 'bike') || {
+        id: 'VEH-BK-TEMP',
+        customerId: currentCustomer.id,
+        make: 'Royal Enfield',
+        model: 'Hunter 350',
+        year: 2024,
+        type: 'bike' as const,
+        color: 'Dapper Ash',
+        registrationNumber: 'KA01BK2024',
+        isDefault: false
+      };
+      setActiveVehicle(bikeVeh);
+    } else {
+      const carVeh = vehicles.find((v) => v.type !== 'bike') || vehicles[0];
+      if (carVeh) setActiveVehicle(carVeh);
+    }
+  };
+
   const handleTabChange = (id: string) => {
     setActiveCategoryId(id);
     setActiveCategoryIds(null);
   };
 
+  // Base service filtering for current mode
+  const modeServices = SERVICE_ITEMS.filter((srv) => {
+    if (isBikeMode) {
+      return srv.vehicleTypes.includes('bike') && ['CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'].includes(srv.categoryId);
+    } else {
+      return srv.vehicleTypes.some((t) => t !== 'bike') && !['CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'].includes(srv.categoryId);
+    }
+  });
+
   const filteredServices = activeCategoryIds
-    ? SERVICE_ITEMS.filter((srv) => activeCategoryIds.includes(srv.categoryId))
+    ? modeServices.filter((srv) => activeCategoryIds.includes(srv.categoryId))
     : activeCategoryId === 'ALL'
-      ? SERVICE_ITEMS
-      : SERVICE_ITEMS.filter((srv) => srv.categoryId === activeCategoryId);
+      ? modeServices
+      : modeServices.filter((srv) => srv.categoryId === activeCategoryId);
+
+  const availableAddons = ADDONS_CATALOG.filter((a) =>
+    a.vehicleTypes.includes(activeVehicle.type) || (isBikeMode && a.vehicleTypes.includes('bike'))
+  );
 
   const handleSelectService = (srv: ServiceItem) => {
     setSelectedService(srv);
@@ -95,24 +141,53 @@ export const ServiceCatalogView: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      {/* ── Sticky header + tabs ── */}
+      {/* ── Sticky header + mode toggle + tabs ── */}
       <div className="px-4 pt-4 pb-3 bg-[#FAFAF8] border-b border-[#EBEBED]">
-        <div className="mb-1">
-          <h2 className="text-[17px] font-bold text-[#111827] tracking-tight">Service Catalog</h2>
-          <p className="text-[11.5px] text-[#6B7280] mt-0.5">
-            Prices for{' '}
-            <span className="font-semibold text-[#374151]">{activeVehicle.make} {activeVehicle.model}</span>
-            {' '}·{' '}
-            <span className="font-semibold text-[#374151] capitalize">{activeVehicle.type}</span>
-          </p>
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h2 className="text-[17px] font-bold text-[#111827] tracking-tight">Service Catalog</h2>
+            <p className="text-[11.5px] text-[#6B7280] mt-0.5">
+              Prices for{' '}
+              <span className="font-semibold text-[#374151]">{activeVehicle.make} {activeVehicle.model}</span>
+              {' '}·{' '}
+              <span className="font-semibold text-[#374151] capitalize">{activeVehicle.type}</span>
+            </p>
+          </div>
+
+          <button
+            onClick={() => navigate('/customer/garage')}
+            className="text-xs font-semibold text-[#0088FF] hover:underline shrink-0"
+          >
+            Change
+          </button>
+        </div>
+
+        {/* Mode Switcher Toggle */}
+        <div className="bg-[#E2E8F0] p-1 rounded-xl flex items-center mb-3">
+          <button
+            onClick={() => handleToggleMode('car')}
+            className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              !isBikeMode ? 'bg-white text-[#1D4ED8] shadow-sm' : 'text-[#64748B]'
+            }`}
+          >
+            🚗 Car Services
+          </button>
+          <button
+            onClick={() => handleToggleMode('bike')}
+            className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              isBikeMode ? 'bg-[#059669] text-white shadow-sm' : 'text-[#64748B]'
+            }`}
+          >
+            🏍️ Bike Services
+          </button>
         </div>
 
         {/* Category pill tabs */}
-        <div className="flex gap-2 overflow-x-auto scrollbar-none pt-3 -mx-1 px-1">
+        <div className="flex gap-2 overflow-x-auto scrollbar-none pt-1 -mx-1 px-1">
           {tabs.map((cat) => {
             const count = cat.id === 'ALL'
-              ? SERVICE_ITEMS.length
-              : SERVICE_ITEMS.filter((s) => s.categoryId === cat.id).length;
+              ? modeServices.length
+              : modeServices.filter((s) => s.categoryId === cat.id).length;
             const isActive = activeCategoryId === cat.id;
 
             return (
@@ -149,97 +224,103 @@ export const ServiceCatalogView: React.FC = () => {
       {/* ── Service list ── */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={activeCategoryId}
+          key={`${activeVehicle.type}-${activeCategoryId}`}
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
           className="p-4 space-y-3"
         >
-          {filteredServices.map((srv) => {
-            const cat = SERVICE_CATEGORIES.find((c) => c.id === srv.categoryId);
-            const colors = CATEGORY_COLORS[srv.categoryId];
-            const rawPrice = srv.pricing[activeVehicle.type];
-            const price = rawPrice && rawPrice > 0 ? rawPrice : (srv.pricing.bike || srv.pricing.sedan || 249);
+          {filteredServices.length === 0 ? (
+            <div className="text-center py-10 bg-white rounded-2xl border border-[#EBEBED]">
+              <p className="text-sm font-semibold text-[#64748B]">No services found in this category.</p>
+            </div>
+          ) : (
+            filteredServices.map((srv) => {
+              const cat = SERVICE_CATEGORIES.find((c) => c.id === srv.categoryId);
+              const colors = CATEGORY_COLORS[srv.categoryId];
+              const rawPrice = srv.pricing[activeVehicle.type];
+              const price = rawPrice && rawPrice > 0 ? rawPrice : (srv.pricing.bike || srv.pricing.sedan || 249);
 
-            return (
-              <div
-                key={srv.id}
-                className="bg-white rounded-2xl border border-[#EBEBED] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-shadow duration-200"
-              >
-                {/* Image + details row */}
-                <div className="flex gap-3 p-4 pb-3">
-                  <div className="relative shrink-0">
-                    <img
-                      src={srv.heroImage}
-                      alt={srv.name}
-                      className="w-[76px] h-[76px] rounded-xl object-cover"
-                    />
-                    {srv.isPopular && (
-                      <span className="absolute -top-1.5 -right-1.5 bg-[#F5B000] text-[#0A0F17] text-[8.5px] font-black px-1.5 py-[3px] rounded-full uppercase tracking-wide leading-none">
-                        HOT
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    {/* Category chip — only in All view */}
-                    {cat && activeCategoryId === 'ALL' && (
-                      <span className={`inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-[3px] rounded-md mb-1.5 ${colors?.badge}`}>
-                        {CATEGORY_ICONS[cat.iconName]}
-                        {cat.name}
-                      </span>
-                    )}
-
-                    <h3 className="font-bold text-[13px] text-[#111827] leading-snug line-clamp-2">
-                      {srv.name}
-                    </h3>
-
-                    <div className="flex items-center gap-1 mt-1 mb-1.5">
-                      <Clock className="w-3 h-3 text-[#9CA3AF]" />
-                      <span className="text-[11px] text-[#9CA3AF]">{srv.durationMinutes} min</span>
+              return (
+                <div
+                  key={srv.id}
+                  className="bg-white rounded-2xl border border-[#EBEBED] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-shadow duration-200"
+                >
+                  {/* Image + details row */}
+                  <div className="flex gap-3 p-4 pb-3">
+                    <div className="relative shrink-0">
+                      <img
+                        src={srv.heroImage}
+                        alt={srv.name}
+                        className="w-[76px] h-[76px] rounded-xl object-cover"
+                      />
+                      {srv.isPopular && (
+                        <span className="absolute -top-1.5 -right-1.5 bg-[#F5B000] text-[#0A0F17] text-[8.5px] font-black px-1.5 py-[3px] rounded-full uppercase tracking-wide leading-none">
+                          HOT
+                        </span>
+                      )}
                     </div>
 
-                    <p className="text-[11px] text-[#6B7280] line-clamp-2 leading-relaxed">
-                      {srv.description}
-                    </p>
-                  </div>
-                </div>
+                    <div className="flex-1 min-w-0">
+                      {/* Category chip — only in All view */}
+                      {cat && activeCategoryId === 'ALL' && (
+                        <span className={`inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-[3px] rounded-md mb-1.5 ${colors?.badge}`}>
+                          {CATEGORY_ICONS[cat.iconName]}
+                          {cat.name}
+                        </span>
+                      )}
 
-                {/* Inclusions */}
-                <div className="mx-4 mb-3 bg-[#F9FAFB] rounded-xl px-3 py-2.5 border border-[#F0F1F3]">
-                  <p className="text-[9.5px] font-bold text-[#9CA3AF] uppercase tracking-wider mb-1.5">
-                    What's included
-                  </p>
-                  <div className="space-y-1">
-                    {srv.inclusions.slice(0, 3).map((inc, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <div className="w-3.5 h-3.5 rounded-full bg-[#D1FAE5] flex items-center justify-center shrink-0 mt-0.5">
-                          <Check className="w-2 h-2 text-[#059669]" />
-                        </div>
-                        <span className="text-[11px] text-[#4B5563] leading-tight">{inc}</span>
+                      <h3 className="font-bold text-[13px] text-[#111827] leading-snug line-clamp-2">
+                        {srv.name}
+                      </h3>
+
+                      <div className="flex items-center gap-1 mt-1 mb-1.5">
+                        <Clock className="w-3 h-3 text-[#9CA3AF]" />
+                        <span className="text-[11px] text-[#9CA3AF]">{srv.durationMinutes} min</span>
                       </div>
-                    ))}
-                  </div>
-                </div>
 
-                {/* Price + CTA */}
-                <div className="flex items-center justify-between px-4 py-3 border-t border-[#F0F1F3]">
-                  <div>
-                    <span className="text-[18px] font-black text-[#111827] tracking-tight">₹{price}</span>
-                    <p className="text-[10px] text-[#9CA3AF] leading-none mt-0.5">incl. taxes & doorstep</p>
+                      <p className="text-[11px] text-[#6B7280] line-clamp-2 leading-relaxed">
+                        {srv.description}
+                      </p>
+                    </div>
                   </div>
-                  <button
-                    onClick={() => handleSelectService(srv)}
-                    className="flex items-center gap-1.5 bg-[#111827] hover:bg-[#1F2937] active:scale-95 text-white text-[12px] font-semibold px-4 py-2.5 rounded-xl transition-all duration-150"
-                  >
-                    Book
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+
+                  {/* Inclusions */}
+                  <div className="mx-4 mb-3 bg-[#F9FAFB] rounded-xl px-3 py-2.5 border border-[#F0F1F3]">
+                    <p className="text-[9.5px] font-bold text-[#9CA3AF] uppercase tracking-wider mb-1.5">
+                      What's included
+                    </p>
+                    <div className="space-y-1">
+                      {srv.inclusions.slice(0, 3).map((inc, idx) => (
+                        <div key={idx} className="flex items-start gap-2">
+                          <div className="w-3.5 h-3.5 rounded-full bg-[#D1FAE5] flex items-center justify-center shrink-0 mt-0.5">
+                            <Check className="w-2 h-2 text-[#059669]" />
+                          </div>
+                          <span className="text-[11px] text-[#4B5563] leading-tight">{inc}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Price + CTA */}
+                  <div className="flex items-center justify-between px-4 py-3 border-t border-[#F0F1F3]">
+                    <div>
+                      <span className="text-[18px] font-black text-[#111827] tracking-tight">₹{price}</span>
+                      <p className="text-[10px] text-[#9CA3AF] leading-none mt-0.5">incl. taxes & doorstep</p>
+                    </div>
+                    <button
+                      onClick={() => handleSelectService(srv)}
+                      className="flex items-center gap-1.5 bg-[#111827] hover:bg-[#1F2937] active:scale-95 text-white text-[12px] font-semibold px-4 py-2.5 rounded-xl transition-all duration-150"
+                    >
+                      Book
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </motion.div>
       </AnimatePresence>
 
@@ -255,7 +336,7 @@ export const ServiceCatalogView: React.FC = () => {
           </p>
 
           <div className="space-y-2">
-            {ADDONS_CATALOG.map((addon) => {
+            {availableAddons.map((addon) => {
               const isSelected = selectedAddons.some((a) => a.id === addon.id);
               return (
                 <div
@@ -305,4 +386,5 @@ export const ServiceCatalogView: React.FC = () => {
     </div>
   );
 };
+
 

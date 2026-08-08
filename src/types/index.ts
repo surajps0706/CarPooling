@@ -93,6 +93,7 @@ export interface ServiceCategory {
   slug: string;
   iconName: string;
   description: string;
+  targetVehicle?: 'car' | 'bike' | 'both';
 }
 
 export interface ServiceItem {

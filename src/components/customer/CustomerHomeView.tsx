@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, ChevronRight, ShieldCheck, Sparkles, Droplets, Shield, Gem, Bike } from 'lucide-react';
+import { MapPin, ChevronRight, Sparkles, Droplets, Shield, Gem, Bike, Wrench, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useBooking } from '../../context/BookingContext';
 import { Card } from '../ui/Card';
@@ -11,18 +11,56 @@ import { getStatusBadgeVariant } from '../../utils/formatters';
 
 export const CustomerHomeView: React.FC = () => {
   const navigate = useNavigate();
-  const { currentCustomer, activeVehicle, activeAddress, activeBooking } = useBooking();
+  const { currentCustomer, vehicles, activeVehicle, setActiveVehicle, activeAddress, activeBooking } = useBooking();
+
+  const isBikeMode = activeVehicle.type === 'bike';
 
   const getCategoryIcon = (name: string) => {
     switch (name) {
       case 'Droplets': return <Droplets className="w-3.5 h-3.5 text-[#0088FF]" />;
-      case 'Sparkles': return <Sparkles className="w-3.5 h-3.5 text-[#0088FF]" />;
-      case 'Shield': return <Shield className="w-3.5 h-3.5 text-[#0088FF]" />;
-      case 'Gem': return <Gem className="w-3.5 h-3.5 text-[#0088FF]" />;
+      case 'Sparkles': return <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />;
+      case 'Shield': return <Shield className="w-3.5 h-3.5 text-[#F59E0B]" />;
+      case 'Gem': return <Gem className="w-3.5 h-3.5 text-[#06B6D4]" />;
       case 'Bike': return <Bike className="w-3.5 h-3.5 text-[#059669]" />;
+      case 'Wrench': return <Wrench className="w-3.5 h-3.5 text-[#D97706]" />;
+      case 'Zap': return <Zap className="w-3.5 h-3.5 text-[#10B981]" />;
       default: return <Sparkles className="w-3.5 h-3.5 text-[#0088FF]" />;
     }
   };
+
+  const handleToggleMode = (mode: 'car' | 'bike') => {
+    if (mode === 'bike') {
+      const bikeVeh = vehicles.find((v) => v.type === 'bike') || {
+        id: 'VEH-BK-TEMP',
+        customerId: currentCustomer.id,
+        make: 'Royal Enfield',
+        model: 'Hunter 350',
+        year: 2024,
+        type: 'bike' as const,
+        color: 'Dapper Ash',
+        registrationNumber: 'KA01BK2024',
+        isDefault: false
+      };
+      setActiveVehicle(bikeVeh);
+    } else {
+      const carVeh = vehicles.find((v) => v.type !== 'bike') || vehicles[0];
+      if (carVeh) setActiveVehicle(carVeh);
+    }
+  };
+
+  // Filter Categories by Mode
+  const activeCategories = SERVICE_CATEGORIES.filter((c) =>
+    isBikeMode ? c.targetVehicle === 'bike' : c.targetVehicle === 'car' || !c.targetVehicle
+  );
+
+  // Filter Packages by Mode
+  const activePackages = SERVICE_ITEMS.filter((srv) => {
+    if (isBikeMode) {
+      return srv.vehicleTypes.includes('bike') && ['CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'].includes(srv.categoryId);
+    } else {
+      return srv.vehicleTypes.some((t) => t !== 'bike') && !['CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'].includes(srv.categoryId);
+    }
+  });
 
   return (
     <div className="p-4 space-y-5">
@@ -44,6 +82,32 @@ export const CustomerHomeView: React.FC = () => {
         <Badge variant="accent">
           Doorstep Service
         </Badge>
+      </div>
+
+      {/* Car vs Bike Vehicle Mode Switcher */}
+      <div className="bg-[#F1F5F9] p-1 rounded-2xl flex items-center shadow-inner">
+        <button
+          onClick={() => handleToggleMode('car')}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+            !isBikeMode
+              ? 'bg-white text-[#1D4ED8] shadow-md border border-[#BFDBFE]'
+              : 'text-[#64748B] hover:text-[#0F172A]'
+          }`}
+        >
+          <span className="text-base">🚗</span>
+          Car Services
+        </button>
+        <button
+          onClick={() => handleToggleMode('bike')}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+            isBikeMode
+              ? 'bg-[#059669] text-white shadow-md'
+              : 'text-[#64748B] hover:text-[#0F172A]'
+          }`}
+        >
+          <span className="text-base">🏍️</span>
+          Bike Services
+        </button>
       </div>
 
       {/* Location Bar */}
@@ -108,83 +172,65 @@ export const CustomerHomeView: React.FC = () => {
           onClick={() => navigate('/customer/garage')}
           className="text-xs font-semibold text-[#0088FF] hover:underline"
         >
-          Change
+          Change Vehicle
         </button>
       </div>
 
-      {/* Service Categories — Grouped by Vehicle Type */}
+      {/* Service Categories — Dynamically Filtered based on Mode */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-bold text-[#0F172A] tracking-tight">Service Categories</h3>
+          <h3 className="text-sm font-bold text-[#0F172A] tracking-tight">
+            {isBikeMode ? '🏍️ Bike Service Categories' : '🚗 Car Service Categories'}
+          </h3>
           <button onClick={() => navigate('/customer/catalog')} className="text-xs font-semibold text-[#0088FF]">
             View All
           </button>
         </div>
 
-        <div className="space-y-2.5">
-          {[
-            {
-              id: 'car',
-              label: 'Car Services',
-              emoji: '🚗',
-              color: 'bg-[#EFF6FF] border-[#BFDBFE]',
-              labelColor: 'text-[#1D4ED8]',
-              categories: SERVICE_CATEGORIES.filter(c => ['CAT-01','CAT-02','CAT-03','CAT-04'].includes(c.id)),
-            },
-            {
-              id: 'bike',
-              label: 'Bike Services',
-              emoji: '🏍️',
-              color: 'bg-[#F0FDF4] border-[#BBF7D0]',
-              labelColor: 'text-[#15803D]',
-              categories: SERVICE_CATEGORIES.filter(c => ['CAT-05'].includes(c.id)),
-            },
-          ].map((group) => (
-            <div key={group.id} className={`rounded-2xl border p-3.5 ${group.color}`}>
-              {/* Group header */}
-              <button
-                onClick={() => navigate('/customer/catalog', {
-                  state: { categoryIds: group.categories.map(c => c.id) }
-                })}
-                className="flex items-center gap-2 mb-2.5 w-full text-left"
-              >
-                <span className="text-lg leading-none">{group.emoji}</span>
-                <span className={`text-[13px] font-bold ${group.labelColor}`}>{group.label}</span>
-                <span className={`ml-auto text-[10px] font-semibold ${group.labelColor} opacity-60`}>
-                  {group.categories.length} {group.categories.length === 1 ? 'category' : 'categories'} →
-                </span>
-              </button>
+        <div className={`rounded-2xl border p-3.5 ${isBikeMode ? 'bg-[#F0FDF4] border-[#BBF7D0]' : 'bg-[#EFF6FF] border-[#BFDBFE]'}`}>
+          <div className="flex items-center gap-2 mb-2.5">
+            <span className="text-lg leading-none">{isBikeMode ? '🏍️' : '🚗'}</span>
+            <span className={`text-[13px] font-bold ${isBikeMode ? 'text-[#15803D]' : 'text-[#1D4ED8]'}`}>
+              {isBikeMode ? 'Bike Care Packages' : 'Car Care Packages'}
+            </span>
+            <span className={`ml-auto text-[10px] font-semibold ${isBikeMode ? 'text-[#15803D]' : 'text-[#1D4ED8]'} opacity-60`}>
+              {activeCategories.length} categories
+            </span>
+          </div>
 
-              {/* Sub-category pills */}
-              <div className="flex flex-wrap gap-1.5">
-                {group.categories.map((cat) => (
-                  <motion.button
-                    key={cat.id}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => navigate('/customer/catalog', { state: { categoryId: cat.id } })}
-                    className="flex items-center gap-1.5 bg-white border border-white/80 px-2.5 py-1.5 rounded-full text-[11px] font-semibold text-[#374151] hover:border-[#0088FF] hover:text-[#0088FF] transition-all shadow-sm"
-                  >
-                    {getCategoryIcon(cat.iconName)}
-                    {cat.name}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-2">
+            {activeCategories.map((cat) => (
+              <motion.button
+                key={cat.id}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate('/customer/catalog', { state: { categoryId: cat.id } })}
+                className="flex items-center gap-2 bg-white border border-white/80 p-2.5 rounded-xl text-[11.5px] font-semibold text-[#374151] hover:border-[#0088FF] hover:text-[#0088FF] transition-all shadow-sm text-left"
+              >
+                <div className="w-7 h-7 rounded-lg bg-[#F8FAFC] flex items-center justify-center shrink-0">
+                  {getCategoryIcon(cat.iconName)}
+                </div>
+                <div className="truncate">
+                  <div className="font-bold leading-snug truncate">{cat.name}</div>
+                  <div className="text-[9.5px] text-[#9CA3AF] font-normal truncate">{cat.description}</div>
+                </div>
+              </motion.button>
+            ))}
+          </div>
         </div>
       </div>
 
-
-      {/* Popular Services Grid */}
+      {/* Featured Services Grid */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-bold text-[#0F172A] tracking-tight">Wipeit Packages</h3>
-          <span className="text-xs text-[#64748B]">Price for {activeVehicle.type}</span>
+          <h3 className="text-sm font-bold text-[#0F172A] tracking-tight">
+            {isBikeMode ? 'Wipeit Bike Services' : 'Wipeit Car Services'}
+          </h3>
+          <span className="text-xs text-[#64748B]">Price for {activeVehicle.make}</span>
         </div>
 
         <div className="grid grid-cols-1 gap-3">
-          {SERVICE_ITEMS.slice(0, 3).map((srv) => {
-            const price = srv.pricing[activeVehicle.type] || srv.pricing.sedan;
+          {activePackages.slice(0, 4).map((srv) => {
+            const price = srv.pricing[activeVehicle.type] || srv.pricing.bike || srv.pricing.sedan || 199;
 
             return (
               <Card key={srv.id} hoverable onClick={() => navigate('/customer/catalog')}>
@@ -197,14 +243,14 @@ export const CustomerHomeView: React.FC = () => {
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between">
-                        <h4 className="font-bold text-xs text-[#0F172A]">{srv.name}</h4>
+                        <h4 className="font-bold text-xs text-[#0F172A] line-clamp-1">{srv.name}</h4>
                         {srv.isPopular && (
                           <Badge variant="accent" size="sm">
                             Popular
                           </Badge>
                         )}
                       </div>
-                      <p className="text-[11px] text-[#64748B] line-clamp-2 mt-1">
+                      <p className="text-[11px] text-[#64748B] line-clamp-2 mt-1 leading-relaxed">
                         {srv.description}
                       </p>
                     </div>
@@ -228,3 +274,4 @@ export const CustomerHomeView: React.FC = () => {
     </div>
   );
 };
+
