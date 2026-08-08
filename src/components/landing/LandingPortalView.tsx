@@ -22,12 +22,12 @@ export const LandingPortalView: React.FC = () => {
   const navigate = useNavigate();
 
   const services = [
-    { emoji: '🫧', name: 'Foam Wash', desc: 'Snow foam bath with hydrophobic finish', from: 249, time: '45 min' },
-    { emoji: '🪥', name: 'Interior Deep Clean', desc: 'Full cabin vacuum, dashboard UV care', from: 599, time: '60 min' },
-    { emoji: '💎', name: 'Ceramic Coating', desc: '9H nano ceramic — 12 months protection', from: 2499, time: '3 hrs' },
-    { emoji: '🏍️', name: 'Bike Full Service', desc: 'Engine oil, chain lube, brake & electrical', from: 399, time: '30 min' },
-    { emoji: '✨', name: 'Interior + Exterior', desc: 'Complete rejuvenation combo package', from: 849, time: '90 min' },
-    { emoji: '⛓️', name: 'Chain & Suspension', desc: 'PTFE lube, fork seal audit, slack set', from: 249, time: '30 min' },
+    { emoji: '🫧', name: 'Foam Wash', desc: 'Snow foam bath with hydrophobic finish', from: 249, time: '45 min', categoryId: 'CAT-01' },
+    { emoji: '🪥', name: 'Interior Deep Clean', desc: 'Full cabin vacuum, dashboard UV care', from: 599, time: '60 min', categoryId: 'CAT-02' },
+    { emoji: '💎', name: 'Ceramic Coating', desc: '9H nano ceramic — 12 months protection', from: 2499, time: '3 hrs', categoryId: 'CAT-04' },
+    { emoji: '🏍️', name: 'Bike Full Service', desc: 'Engine oil, chain lube, brake & electrical', from: 399, time: '30 min', categoryId: 'CAT-05' },
+    { emoji: '✨', name: 'Interior + Exterior', desc: 'Complete rejuvenation combo package', from: 849, time: '90 min', categoryId: 'CAT-03' },
+    { emoji: '⛓️', name: 'Chain & Suspension', desc: 'PTFE lube, fork seal audit, slack set', from: 249, time: '30 min', categoryId: 'CAT-05' },
   ];
 
   const trust = [
@@ -265,7 +265,7 @@ export const LandingPortalView: React.FC = () => {
               <motion.div
                 key={i}
                 whileHover={{ y: -2 }}
-                onClick={() => navigate('/customer/catalog')}
+                onClick={() => navigate('/customer/catalog', { state: { categoryId: srv.categoryId } })}
                 className="bg-[#F9FAFB] hover:bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] hover:shadow-md rounded-xl p-3.5 cursor-pointer transition-all duration-150"
               >
                 <div className="text-[24px] mb-2">{srv.emoji}</div>

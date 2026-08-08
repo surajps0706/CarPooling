@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Check, Clock, ChevronRight, Droplets, Sparkles, Shield, Gem, Bike } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -39,6 +39,17 @@ export const ServiceCatalogView: React.FC = () => {
   const [activeCategoryIds, setActiveCategoryIds] = useState<string[] | null>(
     navState?.categoryIds ?? null
   );
+
+  useEffect(() => {
+    const s = location.state as { categoryId?: string; categoryIds?: string[] } | null;
+    if (s?.categoryId) {
+      setActiveCategoryId(s.categoryId);
+      setActiveCategoryIds(null);
+    } else if (s?.categoryIds) {
+      setActiveCategoryIds(s.categoryIds);
+      setActiveCategoryId('ALL');
+    }
+  }, [location.state]);
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<AddonItem[]>([]);
   const [isAddonSheetOpen, setIsAddonSheetOpen] = useState<boolean>(false);
