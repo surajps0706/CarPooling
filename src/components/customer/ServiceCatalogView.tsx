@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Check, Clock, ChevronRight, Droplets, Sparkles, Shield, Gem, Bike } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '../../context/BookingContext';
@@ -26,10 +26,19 @@ const CATEGORY_COLORS: Record<string, { badge: string; text: string }> = {
 
 export const ServiceCatalogView: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { activeVehicle } = useBooking();
 
-  // Default ALL — no need to scroll to find any category
-  const [activeCategoryId, setActiveCategoryId] = useState<string>('ALL');
+  const navState = location.state as { categoryId?: string; categoryIds?: string[] } | null;
+
+  // Pre-select category if navigated from home screen — single cat or group (array)
+  const [activeCategoryId, setActiveCategoryId] = useState<string>(
+    navState?.categoryId ?? 'ALL'
+  );
+  // Multi-category filter (used when tapping a vehicle group header)
+  const [activeCategoryIds, setActiveCategoryIds] = useState<string[] | null>(
+    navState?.categoryIds ?? null
+  );
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<AddonItem[]>([]);
   const [isAddonSheetOpen, setIsAddonSheetOpen] = useState<boolean>(false);
@@ -39,9 +48,17 @@ export const ServiceCatalogView: React.FC = () => {
     ...SERVICE_CATEGORIES
   ];
 
-  const filteredServices = activeCategoryId === 'ALL'
-    ? SERVICE_ITEMS
-    : SERVICE_ITEMS.filter((srv) => srv.categoryId === activeCategoryId);
+  // When user picks a tab, clear the group filter
+  const handleTabChange = (id: string) => {
+    setActiveCategoryId(id);
+    setActiveCategoryIds(null);
+  };
+
+  const filteredServices = activeCategoryIds
+    ? SERVICE_ITEMS.filter((srv) => activeCategoryIds.includes(srv.categoryId))
+    : activeCategoryId === 'ALL'
+      ? SERVICE_ITEMS
+      : SERVICE_ITEMS.filter((srv) => srv.categoryId === activeCategoryId);
 
   const handleSelectService = (srv: ServiceItem) => {
     setSelectedService(srv);
@@ -90,7 +107,7 @@ export const ServiceCatalogView: React.FC = () => {
             return (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategoryId(cat.id)}
+                onClick={() => handleTabChange(cat.id)}
                 className={`
                   flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11.5px] font-semibold
                   whitespace-nowrap shrink-0 transition-all duration-150
