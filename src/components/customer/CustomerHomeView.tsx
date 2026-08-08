@@ -121,23 +121,25 @@ export const CustomerHomeView: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+
+        <div className="grid grid-cols-3 gap-2.5">
           {SERVICE_CATEGORIES.map((cat) => (
             <motion.div
               key={cat.id}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/customer/catalog')}
-              className="shrink-0 w-24 p-3 bg-white border border-[#E2E8F0] rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-[#0088FF] transition-all"
+              className="p-3 bg-white border border-[#E2E8F0] rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-[#0088FF] hover:shadow-sm transition-all"
             >
               <div className="p-2 bg-[#E0F2FE] rounded-xl">
                 {getCategoryIcon(cat.iconName)}
               </div>
-              <span className="text-xs font-semibold text-[#0F172A] text-center leading-tight">
+              <span className="text-[11px] font-semibold text-[#0F172A] text-center leading-tight">
                 {cat.name}
               </span>
             </motion.div>
           ))}
         </div>
+
       </div>
 
       {/* Popular Services Grid */}

@@ -7,7 +7,6 @@ import {
   Wrench,
   DollarSign,
   Package,
-  ShieldCheck,
   Tag,
   BarChart3,
   Bell,
@@ -28,7 +27,6 @@ export const AdminLayout: React.FC = () => {
     { to: '/admin/partners', label: 'Technicians', icon: Wrench },
     { to: '/admin/revenue', label: 'Revenue & Finance', icon: DollarSign },
     { to: '/admin/catalog', label: 'Service Catalog', icon: Package },
-    { to: '/admin/memberships', label: 'Membership Plans', icon: ShieldCheck },
     { to: '/admin/coupons', label: 'Coupons & Offers', icon: Tag },
     { to: '/admin/reports', label: 'Reports & Analytics', icon: BarChart3 },
     { to: '/admin/settings', label: 'System Settings', icon: Settings }

@@ -4,485 +4,373 @@ import {
   Smartphone,
   Wrench,
   LayoutDashboard,
-  Sparkles,
-  Play,
-  ShieldCheck,
-  MapPin,
-  Camera,
   ArrowRight,
   CheckCircle2,
-  Zap,
-  TrendingUp,
-  Bike,
-  Car,
-  Clock,
+  MapPin,
+  Camera,
   Star,
-  Layers,
+  Shield,
+  Clock,
+  Car,
   ChevronRight,
-  Compass
+  Users,
+  Zap
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '../ui/Button';
-import { Card } from '../ui/Card';
-import { Badge } from '../ui/Badge';
+import { motion } from 'framer-motion';
 
 export const LandingPortalView: React.FC = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'customer' | 'partner' | 'admin'>('customer');
 
-  const bikeServicesList = [
-    { icon: '🛢️', title: 'Engine Oil Change', desc: 'Synthetic drain & sludge flush' },
-    { icon: '🔋', title: 'Battery Check', desc: 'Voltage load & terminal polish' },
-    { icon: '🧰', title: 'Clutch & Gear Service', desc: 'Cable tension & bite calibration' },
-    { icon: '🏍️', title: 'Engine Tuning', desc: 'Carb/FI ultrasonic clean & RPM' },
-    { icon: '🔩', title: 'Suspension Check', desc: 'Telescopic fork oil seal audit' },
-    { icon: '💡', title: 'Electrical Check', desc: 'Lighting & wiring health check' },
-    { icon: '🌫️', title: 'Air Filter Cleaning', desc: 'Airbox blowout & mesh clearance' },
-    { icon: '🔥', title: 'Spark Plug Service', desc: 'Carbon removal & gap tuning' },
-    { icon: '⛓️', title: 'Chain Clean & Lube', desc: 'PTFE non-fling synthetic lube' },
-    { icon: '🛞', title: 'Tyre & Brake Care', desc: 'Disc pad mm & PSI inflation' },
-    { icon: '⚙️', title: 'Spare Parts', desc: 'OEM fitment & bolt torque' },
-    { icon: '🚚', title: 'Doorstep Pickup & Drop', desc: 'Safe rider transit & log' },
+  const services = [
+    { emoji: '🫧', name: 'Foam Wash', desc: 'Snow foam bath with hydrophobic finish', from: 249, time: '45 min' },
+    { emoji: '🪥', name: 'Interior Deep Clean', desc: 'Full cabin vacuum, dashboard UV care', from: 599, time: '60 min' },
+    { emoji: '💎', name: 'Ceramic Coating', desc: '9H nano ceramic — 12 months protection', from: 2499, time: '3 hrs' },
+    { emoji: '🏍️', name: 'Bike Full Service', desc: 'Engine oil, chain lube, brake & electrical', from: 399, time: '30 min' },
+    { emoji: '✨', name: 'Interior + Exterior', desc: 'Complete rejuvenation combo package', from: 849, time: '90 min' },
+    { emoji: '⛓️', name: 'Chain & Suspension', desc: 'PTFE lube, fork seal audit, slack set', from: 249, time: '30 min' },
+  ];
+
+  const trust = [
+    { value: '45,000+', label: 'Services Done', color: 'text-[#111827]' },
+    { value: '4.9★', label: 'Customer Rating', color: 'text-[#059669]' },
+    { value: '18 min', label: 'Avg. Technician ETA', color: 'text-[#2563EB]' },
+    { value: '100%', label: 'Photo-Verified Jobs', color: 'text-[#D97706]' },
+  ];
+
+  const portals = [
+    {
+      id: 'customer',
+      icon: <Smartphone className="w-5 h-5" />,
+      title: 'Customer App',
+      subtitle: 'Book services, track live',
+      bg: 'bg-[#EFF6FF]',
+      border: 'border-[#BFDBFE]',
+      iconColor: 'text-[#2563EB]',
+      tag: 'Most used',
+      tagColor: 'bg-[#DBEAFE] text-[#1D4ED8]',
+      path: '/customer',
+      features: [
+        'Live GPS tracking of technician route',
+        'Before & after photo audit in-app',
+        'Instant price for your exact vehicle',
+      ],
+    },
+    {
+      id: 'partner',
+      icon: <Wrench className="w-5 h-5" />,
+      title: 'Technician App',
+      subtitle: 'Jobs, earnings, navigation',
+      bg: 'bg-[#FFFBEB]',
+      border: 'border-[#FDE68A]',
+      iconColor: 'text-[#D97706]',
+      tag: 'Partner access',
+      tagColor: 'bg-[#FEF3C7] text-[#92400E]',
+      path: '/partner',
+      features: [
+        'Turn-by-turn navigation to customer',
+        'Mandatory checklist & photo capture',
+        'Daily earnings breakdown & payout log',
+      ],
+    },
+    {
+      id: 'admin',
+      icon: <LayoutDashboard className="w-5 h-5" />,
+      title: 'Admin Dashboard',
+      subtitle: 'Operations & dispatch',
+      bg: 'bg-[#F0FDF4]',
+      border: 'border-[#BBF7D0]',
+      iconColor: 'text-[#059669]',
+      tag: 'Ops team',
+      tagColor: 'bg-[#DCFCE7] text-[#166534]',
+      path: '/admin',
+      features: [
+        'Assign & reassign technicians in 1 click',
+        'Revenue, tax & partner commission split',
+        'Service catalog pricing management',
+      ],
+    },
   ];
 
   return (
-    <div className="flex-1 bg-[#06090E] text-white flex flex-col justify-between max-w-full w-full overflow-x-hidden min-h-screen">
-      {/* Luxury Hero Banner */}
-      <div className="relative border-b border-[#1E293B] bg-gradient-to-b from-[#0A0F17] via-[#080D15] to-[#06090E] px-4 sm:px-8 pt-10 pb-16 overflow-hidden">
-        {/* Glow Effects */}
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#0088FF]/20 via-[#00D1FF]/10 to-[#F5B000]/15 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-[#0088FF]/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="flex-1 bg-[#FAFAF9] flex flex-col min-h-screen overflow-x-hidden">
 
-        <div className="max-w-6xl mx-auto space-y-8 relative z-10 text-center">
-          {/* Tag Pill */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#111827]/90 border border-[#1E293B] text-xs font-semibold text-[#0088FF] shadow-inner"
-          >
-            <Zap className="w-3.5 h-3.5 text-[#F5B000] fill-[#F5B000]" />
-            <span className="tracking-wide">✦ NEXT-GEN AUTOMOBILE & BIKE CARE ✦</span>
-          </motion.div>
+      {/* HERO */}
+      <section className="border-b border-[#E5E7EB] bg-white">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 
-          {/* Title Showcase */}
-          <div className="space-y-4 max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-7xl font-black tracking-tight text-white leading-none">
-              Drive Clean. <span className="bg-gradient-to-r from-[#0088FF] via-[#38BDF8] to-[#F5B000] bg-clip-text text-transparent">Shine Always.</span>
-            </h1>
-            <p className="text-sm sm:text-lg text-[#94A3B8] max-w-2xl mx-auto font-normal leading-relaxed">
-              Enterprise doorstep car detailing, comprehensive motorcycle engine servicing, real-time partner GPS dispatch, and transparent operational control.
-            </p>
-          </div>
-
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <Button
-              size="lg"
-              onClick={() => navigate('/customer')}
-              className="bg-[#0088FF] hover:bg-[#0066CC] text-white px-7 py-3.5 rounded-2xl font-bold shadow-lg shadow-[#0088FF]/25 transition-all flex items-center gap-2"
-            >
-              Launch Customer App <Smartphone className="w-4 h-4" />
-            </Button>
-
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => navigate('/partner')}
-              className="bg-[#1E293B]/60 border-[#334155] text-white hover:bg-[#334155] px-6 py-3.5 rounded-2xl font-semibold transition-all flex items-center gap-2"
-            >
-              Partner Console <Wrench className="w-4 h-4 text-[#F5B000]" />
-            </Button>
-          </div>
-
-          {/* Stats Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 max-w-4xl mx-auto border-t border-[#1E293B]/80 text-center">
-            <div className="p-3 rounded-2xl bg-[#0F172A]/50 border border-[#1E293B]/60">
-              <div className="text-2xl font-black text-white">45,000+</div>
-              <div className="text-xs text-[#94A3B8] mt-0.5">Vehicles Cleaned</div>
-            </div>
-            <div className="p-3 rounded-2xl bg-[#0F172A]/50 border border-[#1E293B]/60">
-              <div className="text-2xl font-black text-[#0088FF]">18 Mins</div>
-              <div className="text-xs text-[#94A3B8] mt-0.5">Average Technician ETA</div>
-            </div>
-            <div className="p-3 rounded-2xl bg-[#0F172A]/50 border border-[#1E293B]/60">
-              <div className="text-2xl font-black text-[#F5B000]">100%</div>
-              <div className="text-xs text-[#94A3B8] mt-0.5">Photo Verified Audit</div>
-            </div>
-            <div className="p-3 rounded-2xl bg-[#0F172A]/50 border border-[#1E293B]/60">
-              <div className="text-2xl font-black text-emerald-400">4.9 / 5.0</div>
-              <div className="text-xs text-[#94A3B8] mt-0.5">Verified CSAT Rating</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Section: Interactive App Explorer */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-8 py-12 w-full space-y-10">
-        <div className="text-center space-y-2">
-          <div className="text-xs font-bold text-[#0088FF] uppercase tracking-widest">Unified Platform Ecosystem</div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">Explore the Wipeit Surfaces</h2>
-          <p className="text-xs sm:text-sm text-[#94A3B8] max-w-xl mx-auto">
-            Switch between the 3 distinct interfaces designed for customers, field partners, and business managers.
-          </p>
-        </div>
-
-        {/* Tab Switcher */}
-        <div className="flex justify-center">
-          <div className="bg-[#0F172A] p-1.5 rounded-2xl border border-[#1E293B] flex items-center gap-1 sm:gap-2 max-w-md w-full">
-            <button
-              onClick={() => setActiveTab('customer')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
-                activeTab === 'customer'
-                  ? 'bg-[#0088FF] text-white shadow-md'
-                  : 'text-[#94A3B8] hover:text-white'
-              }`}
-            >
-              <Smartphone className="w-4 h-4" /> Customer
-            </button>
-
-            <button
-              onClick={() => setActiveTab('partner')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
-                activeTab === 'partner'
-                  ? 'bg-[#F5B000] text-[#0A0F17] shadow-md'
-                  : 'text-[#94A3B8] hover:text-white'
-              }`}
-            >
-              <Wrench className="w-4 h-4" /> Partner
-            </button>
-
-            <button
-              onClick={() => setActiveTab('admin')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
-                activeTab === 'admin'
-                  ? 'bg-[#38BDF8] text-[#0A0F17] shadow-md'
-                  : 'text-[#94A3B8] hover:text-white'
-              }`}
-            >
-              <LayoutDashboard className="w-4 h-4" /> Admin
-            </button>
-          </div>
-        </div>
-
-        {/* Active Tab Preview Display */}
-        <AnimatePresence mode="wait">
-          {activeTab === 'customer' && (
             <motion.div
-              key="customer-tab"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.25 }}
-              className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-3xl p-6 sm:p-10 border border-[#334155] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-6"
             >
-              <div className="space-y-5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0088FF]/20 text-[#38BDF8] text-xs font-bold">
-                  <Smartphone className="w-3.5 h-3.5" /> Customer App Interface
-                </div>
-
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  1-Tap Doorstep Car & Bike Care Booking
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
-                  Discover foam washing, deep interior vacuuming, 9H ceramic spray, and complete motorcycle engine servicing with real-time GPS technician tracking.
-                </p>
-
-                <div className="space-y-2.5 text-xs text-[#E2E8F0] pt-2">
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
-                    <span>Instant pricing tailored for Hatchbacks, Sedans, SUVs, and Motorcycles</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
-                    <span>Live map displaying technician route & estimated arrival countdown</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
-                    <span>Transparent before & after photo audit uploaded straight to your app</span>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <Button
-                    onClick={() => navigate('/customer')}
-                    className="bg-[#0088FF] hover:bg-[#0066CC] text-white px-6 py-3 rounded-xl font-bold"
-                  >
-                    Open Customer App <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </div>
+              <div className="inline-flex items-center gap-2 bg-[#EFF6FF] border border-[#BFDBFE] text-[#1D4ED8] text-[11.5px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">
+                <Zap className="w-3 h-3 fill-[#1D4ED8]" />
+                Doorstep Auto Care · Bangalore
               </div>
 
-              {/* Visual App Card Preview */}
-              <div className="bg-[#0A0F17] p-5 rounded-2xl border border-[#334155] space-y-3">
-                <div className="flex items-center justify-between text-xs text-[#94A3B8] pb-2 border-b border-[#1E293B]">
-                  <span className="font-mono text-[#0088FF]">Wipeit Customer View</span>
-                  <span className="flex items-center gap-1 text-emerald-400">● Live GPS Connected</span>
-                </div>
-                <div className="bg-[#1E293B]/60 p-3 rounded-xl border border-[#334155]/60 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#0088FF]/20 text-[#0088FF] flex items-center justify-center font-bold">🚗</div>
-                    <div>
-                      <div className="text-xs font-bold text-white">Honda City ZX</div>
-                      <div className="text-[10px] text-[#94A3B8]">KA01CQ5521 • Pearl White</div>
-                    </div>
+              <div>
+                <h1
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  className="text-[32px] sm:text-[44px] font-extrabold text-[#0D0D0D] leading-[1.12] tracking-[-0.022em]"
+                >
+                  Doorstep car & bike care,<br />
+                  done by certified pros.
+                </h1>
+                <p className="text-[15px] text-[#4B5563] mt-5 leading-relaxed max-w-[420px] font-normal">
+                  Book a service, track your technician live, and receive a photo-verified report — all from your phone.
+                </p>
+              </div>
+
+
+              <div className="flex items-center gap-2 text-[13px] text-[#374151]">
+                <MapPin className="w-4 h-4 text-[#2563EB] shrink-0" />
+                <span>Serving <strong>JP Nagar, Koramangala, HSR, Whitefield</strong> & more</span>
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-1">
+                <button
+                  onClick={() => navigate('/customer')}
+                  className="flex items-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] active:scale-[0.98] text-white font-bold text-[14px] px-6 py-3.5 rounded-xl transition-all shadow-[0_4px_14px_rgba(37,99,235,0.35)]"
+                >
+                  Book a Service
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => navigate('/partner')}
+                  className="flex items-center gap-2 bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] text-[#374151] font-semibold text-[14px] px-5 py-3.5 rounded-xl transition-all"
+                >
+                  <Wrench className="w-4 h-4 text-[#D97706]" />
+                  Join as Technician
+                </button>
+              </div>
+
+              <div className="flex flex-wrap gap-4 pt-1">
+                {[
+                  { icon: <Shield className="w-3.5 h-3.5" />, text: 'Insured technicians' },
+                  { icon: <Camera className="w-3.5 h-3.5" />, text: 'Photo audit every job' },
+                  { icon: <Star className="w-3.5 h-3.5" />, text: '4.9 rated platform' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-1.5 text-[12px] text-[#6B7280]">
+                    <span className="text-[#374151]">{item.icon}</span>
+                    {item.text}
                   </div>
-                  <Badge variant="accent" size="sm">Active</Badge>
-                </div>
-                <div className="bg-[#0088FF]/10 border border-[#0088FF]/40 p-3.5 rounded-xl space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold text-[#38BDF8]">Premium Foam Wash & Wax</span>
-                    <span className="font-bold text-white">₹449</span>
-                  </div>
-                  <div className="text-[11px] text-[#94A3B8]">Technician Rahul Verma on the way (12 mins away)</div>
-                </div>
+                ))}
               </div>
             </motion.div>
-          )}
 
-          {activeTab === 'partner' && (
             <motion.div
-              key="partner-tab"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.25 }}
-              className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-3xl p-6 sm:p-10 border border-[#334155] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+              initial={{ opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="relative"
             >
-              <div className="space-y-5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5B000]/20 text-[#F5B000] text-xs font-bold">
-                  <Wrench className="w-3.5 h-3.5" /> Technician Partner Console
+              <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-5 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[10.5px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-0.5">Active booking</p>
+                    <p className="text-[13px] font-bold text-[#111827]">Premium Foam Wash</p>
+                  </div>
+                  <span className="flex items-center gap-1.5 bg-[#DCFCE7] text-[#166534] text-[11px] font-bold px-2.5 py-1 rounded-full">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A] animate-pulse inline-block" />
+                    On the way
+                  </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  Field Technician Job & Earnings Hub
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
-                  Engineered for outdoor clarity, high contrast UI, 1-tap turn-by-turn navigation, mandatory camera audit steps, and instant daily payout tracking.
-                </p>
-
-                <div className="space-y-2.5 text-xs text-[#E2E8F0] pt-2">
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#F5B000] shrink-0" />
-                    <span>High-contrast sunlight readable interface for field technicians</span>
+                <div className="flex items-center gap-3 bg-[#F9FAFB] rounded-xl p-3 border border-[#F0F1F3]">
+                  <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80"
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt="Technician"
+                  />
+                  <div className="flex-1">
+                    <p className="text-[12.5px] font-bold text-[#111827]">Rahul Verma</p>
+                    <p className="text-[11px] text-[#6B7280]">Arriving in 12 min · Honda Activa</p>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#F5B000] shrink-0" />
-                    <span>Enforced before & after photo upload checklist to guarantee quality</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#F5B000] shrink-0" />
-                    <span>Transparent daily earnings breakdown & weekly direct payout bank log</span>
+                  <div className="flex items-center gap-0.5">
+                    <Star className="w-3.5 h-3.5 text-[#F59E0B] fill-[#F59E0B]" />
+                    <span className="text-[12px] font-bold text-[#111827]">4.9</span>
                   </div>
                 </div>
 
-                <div className="pt-2">
-                  <Button
-                    onClick={() => navigate('/partner')}
-                    className="bg-[#F5B000] hover:bg-[#D99B00] text-[#0A0F17] px-6 py-3 rounded-xl font-bold"
-                  >
-                    Open Partner Console <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
+                <div>
+                  <div className="flex items-center justify-between text-[11px] text-[#6B7280] mb-1.5">
+                    <span>Confirmed</span>
+                    <span className="font-semibold text-[#2563EB]">En route</span>
+                    <span>Arrived</span>
+                    <span>Done</span>
+                  </div>
+                  <div className="h-1.5 bg-[#F0F1F3] rounded-full overflow-hidden">
+                    <div className="h-full w-[55%] bg-[#2563EB] rounded-full" />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-[12px] pt-1 border-t border-[#F0F1F3]">
+                  <div className="flex items-center gap-2 text-[#374151]">
+                    <Car className="w-4 h-4 text-[#9CA3AF]" />
+                    Honda City ZX · KA01CQ5521
+                  </div>
+                  <span className="font-bold text-[#111827]">₹449</span>
                 </div>
               </div>
 
-              {/* Visual App Card Preview */}
-              <div className="bg-[#0A0F17] p-5 rounded-2xl border border-[#334155] space-y-3">
-                <div className="flex items-center justify-between text-xs text-[#94A3B8] pb-2 border-b border-[#1E293B]">
-                  <span className="font-mono text-[#F5B000]">Wipeit Partner Dispatch</span>
-                  <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-mono">ON DUTY</span>
+              <div className="absolute -bottom-4 -left-4 bg-white border border-[#E5E7EB] shadow-lg rounded-xl px-3.5 py-2.5 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-[#DCFCE7] flex items-center justify-center">
+                  <CheckCircle2 className="w-4 h-4 text-[#16A34A]" />
                 </div>
-                <div className="bg-[#FEF9C3]/10 border border-[#F5B000]/40 p-3.5 rounded-xl space-y-2">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold text-[#F5B000]">Job #ACP-20901 • Koramangala</span>
-                    <span className="font-bold text-emerald-400">+₹1,850 Today</span>
-                  </div>
-                  <div className="text-[11px] text-[#94A3B8]">Arjun Mehta • Premium Foam Wash + Tyre Shine</div>
+                <div>
+                  <p className="text-[11px] font-bold text-[#111827]">45,000+ services</p>
+                  <p className="text-[10px] text-[#6B7280]">completed this year</p>
                 </div>
+              </div>
+
+              <div className="absolute -top-4 -right-3 bg-white border border-[#E5E7EB] shadow-lg rounded-xl px-3 py-2 flex items-center gap-1.5">
+                <Star className="w-3.5 h-3.5 text-[#F59E0B] fill-[#F59E0B]" />
+                <span className="text-[12px] font-bold text-[#111827]">4.9</span>
+                <span className="text-[10px] text-[#9CA3AF]">avg rating</span>
               </div>
             </motion.div>
-          )}
+          </div>
+        </div>
+      </section>
 
-          {activeTab === 'admin' && (
-            <motion.div
-              key="admin-tab"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.25 }}
-              className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-3xl p-6 sm:p-10 border border-[#334155] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
-            >
-              <div className="space-y-5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-[#38BDF8] text-xs font-bold">
-                  <LayoutDashboard className="w-3.5 h-3.5" /> Executive Control Panel
-                </div>
+      {/* TRUST STRIP */}
+      <section className="border-b border-[#E5E7EB] bg-[#F9FAFB]">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-5 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {trust.map((t, i) => (
+            <div key={i}>
+              <div className={`text-[22px] sm:text-[26px] font-black ${t.color} leading-none`}>{t.value}</div>
+              <div className="text-[11.5px] text-[#9CA3AF] mt-1 font-medium">{t.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  Real-Time Business Operations & Dispatch Command
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
-                  Full visibility over revenue metrics, technician route assignment, service catalog pricing configurations, and customer support management.
-                </p>
-
-                <div className="space-y-2.5 text-xs text-[#E2E8F0] pt-2">
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                    <span>Real-time dispatch drawer to reassign active technicians with 1 click</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                    <span>Financial analytics engine with revenue, tax, and partner commission split</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
-                    <span>Dynamic service catalog & multi-tier pricing grid management</span>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <Button
-                    onClick={() => navigate('/admin')}
-                    className="bg-[#38BDF8] hover:bg-[#0284C7] text-[#0A0F17] px-6 py-3 rounded-xl font-bold"
-                  >
-                    Open Admin Dashboard <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </div>
-              </div>
-
-              {/* Visual App Card Preview */}
-              <div className="bg-[#0A0F17] p-5 rounded-2xl border border-[#334155] space-y-3">
-                <div className="flex items-center justify-between text-xs text-[#94A3B8] pb-2 border-b border-[#1E293B]">
-                  <span className="font-mono text-[#38BDF8]">Wipeit Admin Operations</span>
-                  <span className="text-xs text-[#94A3B8]">Live Server Stream</span>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-[#1E293B] p-3 rounded-xl border border-[#334155]">
-                    <div className="text-[10px] text-[#94A3B8]">Today's Revenue</div>
-                    <div className="text-base font-extrabold text-white">₹48,920</div>
-                  </div>
-                  <div className="bg-[#1E293B] p-3 rounded-xl border border-[#334155]">
-                    <div className="text-[10px] text-[#94A3B8]">Active Jobs</div>
-                    <div className="text-base font-extrabold text-emerald-400">14 Active</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Dedicated Bike Services Section */}
-        <div className="pt-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#1E293B] pb-4">
+      {/* SERVICES GRID */}
+      <section className="border-b border-[#E5E7EB] bg-white">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-10">
+          <div className="flex items-end justify-between mb-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold mb-2">
-                <Bike className="w-3.5 h-3.5" /> Full Two-Wheeler Care Package
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Complete Bike Services Range</h2>
-              <p className="text-xs sm:text-sm text-[#94A3B8] mt-1">
-                Precision doorstep maintenance, tuning, and detailing built specifically for motorcycles & scooters.
-              </p>
+              <p className="text-[11px] font-bold text-[#2563EB] uppercase tracking-widest mb-1">What we do</p>
+              <h2 className="text-[22px] sm:text-[26px] font-black text-[#111827] tracking-tight">Cars and bikes, every service</h2>
             </div>
-
-            <Button
-              onClick={() => navigate('/customer/catalog')}
-              className="bg-[#1E293B] hover:bg-[#334155] text-white border border-[#334155] text-xs font-semibold shrink-0"
-            >
-              Explore Bike Catalog <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
+            <button onClick={() => navigate('/customer/catalog')} className="flex items-center gap-1 text-[13px] text-[#2563EB] font-semibold hover:underline">
+              View all <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
 
-          {/* Bike Services Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {bikeServicesList.map((item, index) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {services.map((srv, i) => (
               <motion.div
-                key={index}
-                whileHover={{ y: -3 }}
+                key={i}
+                whileHover={{ y: -2 }}
                 onClick={() => navigate('/customer/catalog')}
-                className="bg-[#0F172A] p-3.5 rounded-2xl border border-[#1E293B] hover:border-[#0088FF]/60 cursor-pointer transition-all space-y-1.5"
+                className="bg-[#F9FAFB] hover:bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] hover:shadow-md rounded-xl p-3.5 cursor-pointer transition-all duration-150"
               >
-                <div className="text-2xl">{item.icon}</div>
-                <div className="text-xs font-bold text-white line-clamp-1">{item.title}</div>
-                <div className="text-[11px] text-[#94A3B8] line-clamp-1">{item.desc}</div>
+                <div className="text-[24px] mb-2">{srv.emoji}</div>
+                <div className="text-[12.5px] font-bold text-[#111827] leading-snug mb-0.5">{srv.name}</div>
+                <div className="text-[10.5px] text-[#9CA3AF] leading-snug mb-2">{srv.desc}</div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[11.5px] font-bold text-[#111827]">from ₹{srv.from}</span>
+                  <span className="text-[10px] text-[#9CA3AF] flex items-center gap-0.5">
+                    <Clock className="w-2.5 h-2.5" />{srv.time}
+                  </span>
+                </div>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="bg-gradient-to-r from-[#0088FF]/10 via-[#0F172A] to-[#F5B000]/10 p-4 sm:p-6 rounded-2xl border border-[#334155] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="space-y-1 text-center sm:text-left">
-              <div className="text-xs font-bold text-[#F5B000]">✨ Plus Wash, Deep Cleaning, Polishing & Detailing</div>
-              <div className="text-xs text-[#94A3B8]">Includes 9H Nano Ceramic Coating for fuel tanks, exhaust pipes & alloy wheels.</div>
+      {/* PORTAL SELECTOR */}
+      <section className="bg-[#F9FAFB] border-b border-[#E5E7EB]">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-12">
+          <div className="text-center mb-8">
+            <p className="text-[11px] font-bold text-[#6B7280] uppercase tracking-widest mb-1">Three surfaces, one platform</p>
+            <h2 className="text-[22px] sm:text-[28px] font-black text-[#111827] tracking-tight">Which interface are you?</h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            {portals.map((p) => (
+              <motion.button
+                key={p.id}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => navigate(p.path)}
+                className={`text-left p-5 rounded-2xl border-2 transition-all duration-150 w-full group ${p.bg} ${p.border} hover:shadow-md`}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center border ${p.border} ${p.iconColor}`}>
+                    {p.icon}
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${p.tagColor}`}>{p.tag}</span>
+                </div>
+
+                <p className="text-[14px] font-black text-[#111827]">{p.title}</p>
+                <p className="text-[11.5px] text-[#6B7280] mt-0.5 mb-3">{p.subtitle}</p>
+
+                <ul className="space-y-1.5 mb-4">
+                  {p.features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-1.5 text-[11px] text-[#374151]">
+                      <CheckCircle2 className={`w-3 h-3 mt-0.5 shrink-0 ${p.iconColor}`} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className={`flex items-center gap-1.5 text-[12px] font-bold ${p.iconColor}`}>
+                  Open {p.title}
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="bg-white border-b border-[#E5E7EB]">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-10">
+          <h2 className="text-[18px] sm:text-[22px] font-black text-[#111827] mb-6 tracking-tight">How it works</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            {[
+              { step: '01', icon: <Smartphone className="w-5 h-5" />, title: 'Pick a service & slot', desc: 'Choose car or bike service, lock your price, set a time.', color: 'bg-[#EFF6FF] text-[#2563EB]' },
+              { step: '02', icon: <Users className="w-5 h-5" />, title: 'Technician dispatched', desc: 'A verified technician accepts and navigates to your location.', color: 'bg-[#FFFBEB] text-[#D97706]' },
+              { step: '03', icon: <Camera className="w-5 h-5" />, title: 'Photo audit done', desc: 'Before & after timestamped photos uploaded to your account.', color: 'bg-[#F5F3FF] text-[#7C3AED]' },
+              { step: '04', icon: <CheckCircle2 className="w-5 h-5" />, title: 'Rate & done', desc: 'Review your report, rate the tech, payment auto-settled.', color: 'bg-[#F0FDF4] text-[#059669]' },
+            ].map((item, i) => (
+              <div key={i} className="p-4 rounded-xl bg-[#F9FAFB] border border-[#E5E7EB] space-y-3">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${item.color}`}>{item.icon}</div>
+                <div>
+                  <span className="text-[10px] font-black text-[#D1D5DB] uppercase tracking-widest">{item.step}</span>
+                  <h3 className="text-[13px] font-bold text-[#111827] mt-0.5">{item.title}</h3>
+                  <p className="text-[11.5px] text-[#6B7280] mt-1 leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-[#111827] text-white">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <img src="/wipeit-logo.png" alt="Wipeit" className="h-8 object-contain" />
+            <div>
+              <p className="text-[13px] font-black tracking-tight">WIPE<span className="text-[#F59E0B]">IT</span></p>
+              <p className="text-[10px] text-[#6B7280]">Drive Clean. Shine Always.</p>
             </div>
-            <Button
-              size="sm"
-              onClick={() => navigate('/customer/catalog')}
-              className="bg-[#0088FF] hover:bg-[#0066CC] text-white font-bold shrink-0"
-            >
-              Book Bike Care <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
           </div>
-        </div>
-
-        {/* End-to-End Workflow Section */}
-        <div className="pt-6 space-y-6">
-          <div className="text-center space-y-2">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-white">How the Wipeit Engine Works</h3>
-            <p className="text-xs text-[#94A3B8]">Seamless transparency from doorstep booking to verified job completion.</p>
+          <div className="flex items-center gap-6 text-[12px] text-[#9CA3AF]">
+            <button onClick={() => navigate('/customer')} className="hover:text-white transition-colors">Customer App</button>
+            <button onClick={() => navigate('/partner')} className="hover:text-white transition-colors">Partner Console</button>
+            <button onClick={() => navigate('/admin')} className="hover:text-white transition-colors">Admin Dashboard</button>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="p-4 bg-[#0F172A] border border-[#1E293B] space-y-3">
-              <div className="w-8 h-8 rounded-xl bg-[#0088FF]/20 text-[#0088FF] font-bold flex items-center justify-center text-xs">
-                1
-              </div>
-              <h4 className="font-bold text-xs text-white">Select Service & Slot</h4>
-              <p className="text-[11px] text-[#94A3B8]">
-                Choose car or bike care, select doorstep time slot, and lock upfront price.
-              </p>
-            </Card>
-
-            <Card className="p-4 bg-[#0F172A] border border-[#1E293B] space-y-3">
-              <div className="w-8 h-8 rounded-xl bg-[#F5B000]/20 text-[#F5B000] font-bold flex items-center justify-center text-xs">
-                2
-              </div>
-              <h4 className="font-bold text-xs text-white">Live Partner GPS Dispatch</h4>
-              <p className="text-[11px] text-[#94A3B8]">
-                Technician accepts job in partner app with turn-by-turn route navigation.
-              </p>
-            </Card>
-
-            <Card className="p-4 bg-[#0F172A] border border-[#1E293B] space-y-3">
-              <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-xs">
-                3
-              </div>
-              <h4 className="font-bold text-xs text-white">Before / After Photo Audit</h4>
-              <p className="text-[11px] text-[#94A3B8]">
-                Technician uploads timestamped before & after photos for quality assurance.
-              </p>
-            </Card>
-
-            <Card className="p-4 bg-[#0F172A] border border-[#1E293B] space-y-3">
-              <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-xs">
-                4
-              </div>
-              <h4 className="font-bold text-xs text-white">Instant Revenue Sync</h4>
-              <p className="text-[11px] text-[#94A3B8]">
-                Admin dashboard updates metrics live and releases partner payout ledger.
-              </p>
-            </Card>
-          </div>
+          <p className="text-[11px] text-[#4B5563]">© 2026 Wipeit Technologies</p>
         </div>
-      </div>
-
-      {/* Footer Banner */}
-      <div className="border-t border-[#1E293B] bg-[#0A0F17] py-6 px-4 text-center text-xs text-[#94A3B8] space-y-2">
-        <div className="flex items-center justify-center gap-2">
-          <img src="/wipeit-logo.png" alt="Wipeit" className="h-6 object-contain" />
-          <span className="font-bold text-white">WIPEIT ENTERPRISE PLATFORM</span>
-        </div>
-        <p>© 2026 Wipeit Mobility & Detailing Technologies. All rights reserved.</p>
-      </div>
+      </footer>
     </div>
   );
 };
