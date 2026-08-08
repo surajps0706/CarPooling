@@ -342,7 +342,7 @@ export const SERVICE_ITEMS: ServiceItem[] = [
     slug: 'ceramic-coating-1y',
     description: 'Professional grade nano-ceramic paint sealant protecting against UV rays, bird lime, chemical spots, and hydrophobic water marks.',
     durationMinutes: 180,
-    vehicleTypes: ['hatchback', 'sedan', 'suv'],
+    vehicleTypes: ['hatchback', 'sedan', 'suv', 'bike'],
     pricing: { hatchback: 2499, sedan: 2999, suv: 3799, muv: 3799, bike: 1499, truck: 4999 },
     memberPricing: { hatchback: 2124, sedan: 2549, suv: 3229, muv: 3229, bike: 1274, truck: 4249 },
     inclusions: [
@@ -362,6 +362,294 @@ export const SERVICE_ITEMS: ServiceItem[] = [
     minPhotosAfter: 6,
     heroImage: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&auto=format&fit=crop&q=80',
     isPopular: false
+  },
+  // BIKE SERVICES SECTION
+  {
+    id: 'SRV-BK-01',
+    categoryId: 'CAT-05',
+    name: '🛢️ Engine Oil Change & Flush',
+    slug: 'engine-oil-change',
+    description: 'High-grade synthetic/semi-synthetic engine oil replacement with sludge flush and drain plug washer check.',
+    durationMinutes: 30,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 399, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 339, truck: 0 },
+    inclusions: [
+      'Full oil drain & engine flush treatment',
+      'Fresh premium engine oil refill (4T 10W-30/10W-40)',
+      'Oil filter inspection & cleaning',
+      'Used oil eco-friendly disposal'
+    ],
+    checklist: ['Check oil level', 'Drain old oil', 'Flush engine', 'Refill fresh oil', 'Leak check'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=80',
+    isPopular: true
+  },
+  {
+    id: 'SRV-BK-02',
+    categoryId: 'CAT-05',
+    name: '🔋 Battery Check & Terminal Polish',
+    slug: 'battery-check',
+    description: 'Digital voltage test, terminal corrosion removal, electrolyte level top-up, and charging health audit.',
+    durationMinutes: 20,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 199, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 169, truck: 0 },
+    inclusions: [
+      'Multimeter voltage load test',
+      'Terminal post cleaning & anti-sulfation gel',
+      'Fuse box & wiring relay check'
+    ],
+    checklist: ['Measure resting voltage', 'Clean terminals', 'Apply protective gel', 'Test starter crank amp'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-03',
+    categoryId: 'CAT-05',
+    name: '🧰 Clutch & Gear Service',
+    slug: 'clutch-gear-service',
+    description: 'Clutch cable free-play adjustment, friction plate health check, and smooth gear selector lever lubrication.',
+    durationMinutes: 35,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 299, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 249, truck: 0 },
+    inclusions: [
+      'Clutch cable tensioning & greasing',
+      'Gear shift lever alignment',
+      'Bite point calibration for seamless shifting'
+    ],
+    checklist: ['Inspect cable fraying', 'Adjust lever play', 'Lube pivot points', 'Road test gear engagement'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-04',
+    categoryId: 'CAT-05',
+    name: '🏍️ Engine Tuning & RPM Calibration',
+    slug: 'engine-tuning',
+    description: 'Air-fuel mixture optimization, idle RPM setup, throttle body cleaning, and engine response fine-tuning.',
+    durationMinutes: 45,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 499, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 419, truck: 0 },
+    inclusions: [
+      'Carburetor / FI nozzle ultrasonic spray clean',
+      'Tachometer idle RPM tuning',
+      'Engine vacuum & compression check'
+    ],
+    checklist: ['Clean throttle body', 'Adjust idle screw', 'Check AFR sensor', 'Test acceleration pickup'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=600&auto=format&fit=crop&q=80',
+    isPopular: true
+  },
+  {
+    id: 'SRV-BK-05',
+    categoryId: 'CAT-05',
+    name: '🔩 Suspension & Telescopic Fork Check',
+    slug: 'suspension-check',
+    description: 'Front telescopic fork oil seal leak audit, rear shock absorber preload setting, and swingarm bush check.',
+    durationMinutes: 30,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 349, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 299, truck: 0 },
+    inclusions: [
+      'Fork stanchion scratch & oil leak test',
+      'Rear shock dampening rebound check',
+      'Triple tree steering head bearing adjustment'
+    ],
+    checklist: ['Inspect fork seals', 'Check rear shock dampening', 'Tighten steering cone nut'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-06',
+    categoryId: 'CAT-05',
+    name: '💡 Electrical System & Lighting Audit',
+    slug: 'electrical-check',
+    description: 'Complete headlight, tail light, indicator, horn, and ignition switch wiring health diagnostic.',
+    durationMinutes: 25,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 249, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 209, truck: 0 },
+    inclusions: [
+      'Headlight beam focus check & LED/halogen audit',
+      'Brake light switch sensor test',
+      'Instrument cluster & speedo lighting verification'
+    ],
+    checklist: ['Test headlight high/low beam', 'Check indicators', 'Verify horn decibels', 'Inspect brake light'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-07',
+    categoryId: 'CAT-05',
+    name: '🌫️ Air Filter Cleaning & Service',
+    slug: 'air-filter-cleaning',
+    description: 'High-pressure air blowout for foam/paper filters, oil soaking for performance filters, and airbox sanitization.',
+    durationMinutes: 20,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 179, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 149, truck: 0 },
+    inclusions: [
+      'Airbox removal & dust cleaning',
+      'Compressed air filter mesh clearance',
+      'Sealing gasket integrity check'
+    ],
+    checklist: ['Remove air filter', 'Clean airbox housing', 'Blowout dust particles', 'Reinstall & seal'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-08',
+    categoryId: 'CAT-05',
+    name: '🔥 Spark Plug Cleaning & Gap Service',
+    slug: 'spark-plug-service',
+    description: 'Carbon deposit removal, electrode wire brushing, feeder gauge gap calibration, and anti-seize thread treatment.',
+    durationMinutes: 20,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 149, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 129, truck: 0 },
+    inclusions: [
+      'Spark plug extraction & electrode inspection',
+      'Wire brush carbon removal',
+      'Feeder gauge gap set to 0.7-0.8mm'
+    ],
+    checklist: ['Extract spark plug', 'Clean carbon deposits', 'Measure electrode gap', 'Reinstall plug cap'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-09',
+    categoryId: 'CAT-05',
+    name: '⛓️ Chain Cleaning & Heavy-Duty Lubrication',
+    slug: 'chain-cleaning-lube',
+    description: 'Kerosene/degreaser chain wash with 3-sided grunge brush, O-ring safe synthetic chain lube application, and slack adjustment.',
+    durationMinutes: 30,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 249, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 199, truck: 0 },
+    inclusions: [
+      'Deep chain degreasing & grime removal',
+      'High-viscosity PTFE non-fling chain lube coating',
+      'Drive chain tension setting (25-30mm slack)'
+    ],
+    checklist: ['Degrease drive chain', 'Scrub with grunge brush', 'Adjust chain tensioners', 'Apply PTFE lube spray'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=80',
+    isPopular: true
+  },
+  {
+    id: 'SRV-BK-10',
+    categoryId: 'CAT-05',
+    name: '🛞 Tyre Pressure & Brake Pad Care',
+    slug: 'tyre-brake-care',
+    description: 'Front & rear disc pad thickness measurement, drum shoe de-glazing, brake fluid reservoir top-up, and tread depth check.',
+    durationMinutes: 30,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 249, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 199, truck: 0 },
+    inclusions: [
+      'Disc rotor & brake caliper brake-cleaner spray wash',
+      'Drum brake shoe sand-papering',
+      'PSI inflation & tire valve cap check'
+    ],
+    checklist: ['Inspect brake pad mm', 'Clean brake caliper dust', 'Check brake fluid DOT rating', 'Inflate PSI'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-11',
+    categoryId: 'CAT-05',
+    name: '⚙️ Spare Parts & Hardware Fitment',
+    slug: 'spare-parts-fitment',
+    description: 'On-demand replacement of cables, mirrors, brake levers, footpegs, indicators, or bulbs with genuine OEM parts.',
+    durationMinutes: 40,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 299, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 249, truck: 0 },
+    inclusions: [
+      'Full chassis nut & bolt torque check',
+      'Installation of requested OEM spare parts',
+      'Lubrication of footpeg and stand pivots'
+    ],
+    checklist: ['Inspect worn hardware', 'Fit genuine replacement part', 'Torque bolts to spec', 'Test operation'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-12',
+    categoryId: 'CAT-05',
+    name: '🚚 Doorstep Bike Pickup & Drop',
+    slug: 'doorstep-pickup-drop',
+    description: 'Hassle-free safe transport of your motorcycle to nearest Wipeit certified service hub with real-time tracking.',
+    durationMinutes: 60,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 199, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 149, truck: 0 },
+    inclusions: [
+      'Certified rider pickup at your doorstep',
+      'Pre-transport photo condition log',
+      'Safe delivery back to your doorstep upon completion'
+    ],
+    checklist: ['Log odometer reading', 'Perform 360 degree photo audit', 'Secure transport', 'Doorstep drop-off'],
+    minPhotosBefore: 4,
+    minPhotosAfter: 4,
+    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'SRV-BK-13',
+    categoryId: 'CAT-05',
+    name: '✨ Super Bike Foam Wash, Polish & Detailing',
+    slug: 'superbike-wash-polish',
+    description: 'High-pressure foam wash, chrome polishing, matte paint detailer treatment, engine fin degreasing, and tire dress.',
+    durationMinutes: 45,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 299, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 249, truck: 0 },
+    inclusions: [
+      'Dense pH-neutral snow foam wash',
+      'Alloy rim & engine block degrease brush',
+      'Hydrophobic wax body polish & matte conditioner',
+      'Chain lube application included'
+    ],
+    checklist: ['Foam wash entire bike', 'Degrease engine fins & rims', 'Blow dry electricals', 'Apply liquid wax polish'],
+    minPhotosBefore: 2,
+    minPhotosAfter: 2,
+    heroImage: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=80',
+    isPopular: true
+  },
+  {
+    id: 'SRV-BK-14',
+    categoryId: 'CAT-05',
+    name: '💎 Bike 9H Nano Ceramic Coating',
+    slug: 'bike-ceramic-coating',
+    description: 'Ultimate 9H nano ceramic protection for fuel tank, mudguards, side panels, and alloy rims against scratches and UV fading.',
+    durationMinutes: 90,
+    vehicleTypes: ['bike'],
+    pricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 999, truck: 0 },
+    memberPricing: { hatchback: 0, sedan: 0, suv: 0, muv: 0, bike: 849, truck: 0 },
+    inclusions: [
+      'Clay bar tank decontamination & single-stage paint polish',
+      'Dual layer 9H hydrophobic ceramic liquid application',
+      'Silencers & alloy rim heat-resistant ceramic spray',
+      '1-Year gloss & water-repellency warranty'
+    ],
+    checklist: ['Decontaminate paint', 'Machine polish tank & panels', 'Apply 9H ceramic coating', 'Cure under heat lamp'],
+    minPhotosBefore: 4,
+    minPhotosAfter: 4,
+    heroImage: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&auto=format&fit=crop&q=80'
   }
 ];
 

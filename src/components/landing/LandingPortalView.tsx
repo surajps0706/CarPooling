@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Smartphone,
@@ -9,304 +9,482 @@ import {
   ShieldCheck,
   MapPin,
   Camera,
-  DollarSign,
   ArrowRight,
   CheckCircle2,
   Zap,
-  TrendingUp
+  TrendingUp,
+  Bike,
+  Car,
+  Clock,
+  Star,
+  Layers,
+  ChevronRight,
+  Compass
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 
 export const LandingPortalView: React.FC = () => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<'customer' | 'partner' | 'admin'>('customer');
+
+  const bikeServicesList = [
+    { icon: '🛢️', title: 'Engine Oil Change', desc: 'Synthetic drain & sludge flush' },
+    { icon: '🔋', title: 'Battery Check', desc: 'Voltage load & terminal polish' },
+    { icon: '🧰', title: 'Clutch & Gear Service', desc: 'Cable tension & bite calibration' },
+    { icon: '🏍️', title: 'Engine Tuning', desc: 'Carb/FI ultrasonic clean & RPM' },
+    { icon: '🔩', title: 'Suspension Check', desc: 'Telescopic fork oil seal audit' },
+    { icon: '💡', title: 'Electrical Check', desc: 'Lighting & wiring health check' },
+    { icon: '🌫️', title: 'Air Filter Cleaning', desc: 'Airbox blowout & mesh clearance' },
+    { icon: '🔥', title: 'Spark Plug Service', desc: 'Carbon removal & gap tuning' },
+    { icon: '⛓️', title: 'Chain Clean & Lube', desc: 'PTFE non-fling synthetic lube' },
+    { icon: '🛞', title: 'Tyre & Brake Care', desc: 'Disc pad mm & PSI inflation' },
+    { icon: '⚙️', title: 'Spare Parts', desc: 'OEM fitment & bolt torque' },
+    { icon: '🚚', title: 'Doorstep Pickup & Drop', desc: 'Safe rider transit & log' },
+  ];
 
   return (
-    <div className="flex-1 bg-[#FAFAF8] text-[#0F172A] flex flex-col justify-between p-4 sm:p-8 max-w-7xl mx-auto w-full space-y-10 py-8">
-      {/* Premium Hero Banner Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="relative bg-gradient-to-br from-[#0A0F17] via-[#0F172A] to-[#1E293B] text-white p-6 sm:p-10 rounded-3xl shadow-2xl border border-[#334155] overflow-hidden"
-      >
-        {/* Background Ambient Glows */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#0088FF]/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#F5B000]/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="flex-1 bg-[#06090E] text-white flex flex-col justify-between max-w-full w-full overflow-x-hidden min-h-screen">
+      {/* Luxury Hero Banner */}
+      <div className="relative border-b border-[#1E293B] bg-gradient-to-b from-[#0A0F17] via-[#080D15] to-[#06090E] px-4 sm:px-8 pt-10 pb-16 overflow-hidden">
+        {/* Glow Effects */}
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#0088FF]/20 via-[#00D1FF]/10 to-[#F5B000]/15 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-[#0088FF]/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col items-center text-center space-y-5 max-w-3xl mx-auto">
-          {/* Logo Showcase */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-[#0088FF]/30 blur-xl rounded-full group-hover:bg-[#0088FF]/50 transition-all" />
-            <img
-              src="/wipeit-logo.png"
-              alt="Wipeit Logo"
-              className="relative h-28 sm:h-36 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
-            />
-          </div>
+        <div className="max-w-6xl mx-auto space-y-8 relative z-10 text-center">
+          {/* Tag Pill */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#111827]/90 border border-[#1E293B] text-xs font-semibold text-[#0088FF] shadow-inner"
+          >
+            <Zap className="w-3.5 h-3.5 text-[#F5B000] fill-[#F5B000]" />
+            <span className="tracking-wide">✦ NEXT-GEN AUTOMOBILE & BIKE CARE ✦</span>
+          </motion.div>
 
-          {/* Title & Slogan */}
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1E293B]/80 border border-[#334155] text-xs font-semibold text-[#38BDF8]">
-              <Zap className="w-3.5 h-3.5 text-[#F5B000] fill-[#F5B000]" />
-              Enterprise Automobile Care Ecosystem
-            </div>
-
-            <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-none">
-              WIPE<span className="text-[#F5B000]">IT</span>
+          {/* Title Showcase */}
+          <div className="space-y-4 max-w-4xl mx-auto">
+            <h1 className="text-4xl sm:text-7xl font-black tracking-tight text-white leading-none">
+              Drive Clean. <span className="bg-gradient-to-r from-[#0088FF] via-[#38BDF8] to-[#F5B000] bg-clip-text text-transparent">Shine Always.</span>
             </h1>
-
-            <p className="text-sm sm:text-base font-extrabold text-[#0088FF] tracking-widest uppercase">
-              ✦ DRIVE CLEAN. SHINE ALWAYS. ✦
+            <p className="text-sm sm:text-lg text-[#94A3B8] max-w-2xl mx-auto font-normal leading-relaxed">
+              Enterprise doorstep car detailing, comprehensive motorcycle engine servicing, real-time partner GPS dispatch, and transparent operational control.
             </p>
           </div>
 
-          <p className="text-xs sm:text-sm text-[#94A3B8] max-w-2xl leading-relaxed">
-            A technology platform built for premium vehicle detailing, doorstep washing, real-time technician dispatch, and business management.
-          </p>
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <Button
+              size="lg"
+              onClick={() => navigate('/customer')}
+              className="bg-[#0088FF] hover:bg-[#0066CC] text-white px-7 py-3.5 rounded-2xl font-bold shadow-lg shadow-[#0088FF]/25 transition-all flex items-center gap-2"
+            >
+              Launch Customer App <Smartphone className="w-4 h-4" />
+            </Button>
 
-          {/* Quick Metrics Bar */}
-          <div className="pt-2 grid grid-cols-3 gap-3 sm:gap-8 border-t border-[#334155]/60 w-full max-w-xl text-center">
-            <div>
-              <div className="text-lg sm:text-xl font-extrabold text-white">3 Apps</div>
-              <div className="text-[10px] sm:text-xs text-[#94A3B8]">Connected Platform</div>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => navigate('/partner')}
+              className="bg-[#1E293B]/60 border-[#334155] text-white hover:bg-[#334155] px-6 py-3.5 rounded-2xl font-semibold transition-all flex items-center gap-2"
+            >
+              Partner Console <Wrench className="w-4 h-4 text-[#F5B000]" />
+            </Button>
+          </div>
+
+          {/* Stats Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 max-w-4xl mx-auto border-t border-[#1E293B]/80 text-center">
+            <div className="p-3 rounded-2xl bg-[#0F172A]/50 border border-[#1E293B]/60">
+              <div className="text-2xl font-black text-white">45,000+</div>
+              <div className="text-xs text-[#94A3B8] mt-0.5">Vehicles Cleaned</div>
             </div>
-            <div>
-              <div className="text-lg sm:text-xl font-extrabold text-[#0088FF]">Real-Time</div>
-              <div className="text-[10px] sm:text-xs text-[#94A3B8]">Live Dispatch</div>
+            <div className="p-3 rounded-2xl bg-[#0F172A]/50 border border-[#1E293B]/60">
+              <div className="text-2xl font-black text-[#0088FF]">18 Mins</div>
+              <div className="text-xs text-[#94A3B8] mt-0.5">Average Technician ETA</div>
             </div>
-            <div>
-              <div className="text-lg sm:text-xl font-extrabold text-[#F5B000]">100%</div>
-              <div className="text-[10px] sm:text-xs text-[#94A3B8]">Photo Verified</div>
+            <div className="p-3 rounded-2xl bg-[#0F172A]/50 border border-[#1E293B]/60">
+              <div className="text-2xl font-black text-[#F5B000]">100%</div>
+              <div className="text-xs text-[#94A3B8] mt-0.5">Photo Verified Audit</div>
+            </div>
+            <div className="p-3 rounded-2xl bg-[#0F172A]/50 border border-[#1E293B]/60">
+              <div className="text-2xl font-black text-emerald-400">4.9 / 5.0</div>
+              <div className="text-xs text-[#94A3B8] mt-0.5">Verified CSAT Rating</div>
             </div>
           </div>
         </div>
-      </motion.div>
-
-      {/* Section Title */}
-      <div className="text-center space-y-1">
-        <h2 className="text-2xl font-extrabold text-[#0F172A] tracking-tight">
-          Select Product Surface to Explore
-        </h2>
-        <p className="text-xs text-[#64748B]">
-          Three distinct interfaces powered by one unified real-time backend engine.
-        </p>
       </div>
 
-      {/* 3 Application Launchers Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Customer App Launcher */}
-        <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.15 }}>
-          <Card
-            onClick={() => navigate('/customer')}
-            className="p-6 space-y-5 bg-white border-2 border-[#E2E8F0] hover:border-[#0088FF] hover:shadow-xl cursor-pointer transition-all group relative overflow-hidden h-full flex flex-col justify-between"
-          >
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="w-14 h-14 rounded-2xl bg-[#E0F2FE] text-[#0088FF] flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-                  <Smartphone className="w-7 h-7" />
-                </div>
-                <Badge variant="accent" size="sm">Mobile First</Badge>
-              </div>
-
-              <div>
-                <h3 className="font-extrabold text-xl text-[#0F172A] group-hover:text-[#0088FF] transition-colors">
-                  Wipeit Customer
-                </h3>
-                <p className="text-xs text-[#64748B] mt-1.5 leading-relaxed">
-                  Mobile application for vehicle owners to discover services, pick slots, track partners live, and manage subscriptions.
-                </p>
-              </div>
-
-              {/* Feature Points */}
-              <div className="space-y-2 pt-2 border-t border-[#F1F5F9] text-xs text-[#0F172A]">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
-                  <span>Doorstep Foam Wash & Detailing</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
-                  <span>Live Partner GPS Tracking Map</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
-                  <span>Executive Gold & Platinum Club</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4 flex items-center justify-between text-xs font-bold text-[#0088FF] border-t border-[#F1F5F9]">
-              <span>Launch Customer App</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
-        </motion.div>
-
-        {/* Partner App Launcher */}
-        <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.15 }}>
-          <Card
-            onClick={() => navigate('/partner')}
-            className="p-6 space-y-5 bg-white border-2 border-[#E2E8F0] hover:border-[#F5B000] hover:shadow-xl cursor-pointer transition-all group relative overflow-hidden h-full flex flex-col justify-between"
-          >
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="w-14 h-14 rounded-2xl bg-[#FEF9C3] text-[#D99B00] flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-                  <Wrench className="w-7 h-7" />
-                </div>
-                <Badge variant="warning" size="sm">High Contrast</Badge>
-              </div>
-
-              <div>
-                <h3 className="font-extrabold text-xl text-[#0F172A] group-hover:text-[#D99B00] transition-colors">
-                  Wipeit Partner
-                </h3>
-                <p className="text-xs text-[#64748B] mt-1.5 leading-relaxed">
-                  Field technician execution app optimized for outdoor sunlight, turn-by-turn navigation, and mandatory photo verification.
-                </p>
-              </div>
-
-              {/* Feature Points */}
-              <div className="space-y-2 pt-2 border-t border-[#F1F5F9] text-xs text-[#0F172A]">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#D99B00] shrink-0" />
-                  <span>1-Tap Job Acceptance & Route</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#D99B00] shrink-0" />
-                  <span>Before/After Camera Audit</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#D99B00] shrink-0" />
-                  <span>Weekly Earnings & Payout Ledger</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4 flex items-center justify-between text-xs font-bold text-[#D99B00] border-t border-[#F1F5F9]">
-              <span>Launch Technician App</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
-        </motion.div>
-
-        {/* Admin Dashboard Launcher */}
-        <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.15 }}>
-          <Card
-            onClick={() => navigate('/admin')}
-            className="p-6 space-y-5 bg-white border-2 border-[#E2E8F0] hover:border-[#0F172A] hover:shadow-xl cursor-pointer transition-all group relative overflow-hidden h-full flex flex-col justify-between"
-          >
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="w-14 h-14 rounded-2xl bg-[#F1F5F9] text-[#0F172A] flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-                  <LayoutDashboard className="w-7 h-7" />
-                </div>
-                <Badge variant="neutral" size="sm">Desktop First</Badge>
-              </div>
-
-              <div>
-                <h3 className="font-extrabold text-xl text-[#0F172A] group-hover:text-[#0088FF] transition-colors">
-                  Wipeit Admin
-                </h3>
-                <p className="text-xs text-[#64748B] mt-1.5 leading-relaxed">
-                  Executive dashboard for business owners to monitor real-time revenue, manage bookings, reassign technicians, and configure pricing.
-                </p>
-              </div>
-
-              {/* Feature Points */}
-              <div className="space-y-2 pt-2 border-t border-[#F1F5F9] text-xs text-[#0F172A]">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#0F172A] shrink-0" />
-                  <span>Live Operations & Revenue KPIs</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#0F172A] shrink-0" />
-                  <span>Dispatch & Reassignment Drawer</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#0F172A] shrink-0" />
-                  <span>Service Catalog & Pricing Grid</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4 flex items-center justify-between text-xs font-bold text-[#0F172A] border-t border-[#F1F5F9]">
-              <span>Launch Admin Dashboard</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Card>
-        </motion.div>
-      </div>
-
-      {/* Interactive Lifecycle Demo Flow Banner */}
-      <Card className="p-6 sm:p-8 bg-gradient-to-r from-[#0A0F17] via-[#0F172A] to-[#1E293B] text-white rounded-3xl shadow-2xl border border-[#334155] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-        <div className="space-y-3 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5B000]/20 text-[#F5B000] text-xs font-bold">
-            <span className="w-2 h-2 rounded-full bg-[#F5B000] animate-ping" />
-            Interactive Client Demo Workflow
-          </div>
-
-          <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-            Test the Full End-to-End Booking Lifecycle
-          </h3>
-
-          <p className="text-xs sm:text-sm text-[#94A3B8] max-w-xl leading-relaxed">
-            1. Book a wash in Customer App → 2. See instant job dispatch in Partner App → 3. Complete photo verification → 4. Watch live revenue update in Admin Dashboard.
+      {/* Main Section: Interactive App Explorer */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 py-12 w-full space-y-10">
+        <div className="text-center space-y-2">
+          <div className="text-xs font-bold text-[#0088FF] uppercase tracking-widest">Unified Platform Ecosystem</div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">Explore the Wipeit Surfaces</h2>
+          <p className="text-xs sm:text-sm text-[#94A3B8] max-w-xl mx-auto">
+            Switch between the 3 distinct interfaces designed for customers, field partners, and business managers.
           </p>
         </div>
 
-        <Button
-          size="lg"
-          className="bg-[#0088FF] hover:bg-[#0066CC] text-white shrink-0 shadow-lg"
-          onClick={() => navigate('/customer/catalog')}
-        >
-          Start Live Demo Flow <Play className="w-4 h-4 ml-2 fill-current" />
-        </Button>
-      </Card>
+        {/* Tab Switcher */}
+        <div className="flex justify-center">
+          <div className="bg-[#0F172A] p-1.5 rounded-2xl border border-[#1E293B] flex items-center gap-1 sm:gap-2 max-w-md w-full">
+            <button
+              onClick={() => setActiveTab('customer')}
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
+                activeTab === 'customer'
+                  ? 'bg-[#0088FF] text-white shadow-md'
+                  : 'text-[#94A3B8] hover:text-white'
+              }`}
+            >
+              <Smartphone className="w-4 h-4" /> Customer
+            </button>
 
-      {/* Core Platform Capabilities Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-4 bg-white space-y-2 border border-[#E2E8F0]">
-          <div className="p-2.5 rounded-xl bg-[#E0F2FE] text-[#0088FF] w-fit">
-            <Camera className="w-5 h-5" />
-          </div>
-          <h4 className="font-bold text-xs text-[#0F172A]">Photo Audit Accountability</h4>
-          <p className="text-[11px] text-[#64748B]">
-            Mandatory before & after photo uploads with timestamping and angle verification.
-          </p>
-        </Card>
+            <button
+              onClick={() => setActiveTab('partner')}
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
+                activeTab === 'partner'
+                  ? 'bg-[#F5B000] text-[#0A0F17] shadow-md'
+                  : 'text-[#94A3B8] hover:text-white'
+              }`}
+            >
+              <Wrench className="w-4 h-4" /> Partner
+            </button>
 
-        <Card className="p-4 bg-white space-y-2 border border-[#E2E8F0]">
-          <div className="p-2.5 rounded-xl bg-[#FEF9C3] text-[#D99B00] w-fit">
-            <MapPin className="w-5 h-5" />
+            <button
+              onClick={() => setActiveTab('admin')}
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
+                activeTab === 'admin'
+                  ? 'bg-[#38BDF8] text-[#0A0F17] shadow-md'
+                  : 'text-[#94A3B8] hover:text-white'
+              }`}
+            >
+              <LayoutDashboard className="w-4 h-4" /> Admin
+            </button>
           </div>
-          <h4 className="font-bold text-xs text-[#0F172A]">Live GPS Tracking</h4>
-          <p className="text-[11px] text-[#64748B]">
-            Real-time partner tracking map and arrival notifications for customers.
-          </p>
-        </Card>
+        </div>
 
-        <Card className="p-4 bg-white space-y-2 border border-[#E2E8F0]">
-          <div className="p-2.5 rounded-xl bg-purple-50 text-purple-600 w-fit">
-            <ShieldCheck className="w-5 h-5" />
-          </div>
-          <h4 className="font-bold text-xs text-[#0F172A]">Managed Platform</h4>
-          <p className="text-[11px] text-[#64748B]">
-            Centralized control over service catalog, pricing rules, and technician assignments.
-          </p>
-        </Card>
+        {/* Active Tab Preview Display */}
+        <AnimatePresence mode="wait">
+          {activeTab === 'customer' && (
+            <motion.div
+              key="customer-tab"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25 }}
+              className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-3xl p-6 sm:p-10 border border-[#334155] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+            >
+              <div className="space-y-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0088FF]/20 text-[#38BDF8] text-xs font-bold">
+                  <Smartphone className="w-3.5 h-3.5" /> Customer App Interface
+                </div>
 
-        <Card className="p-4 bg-white space-y-2 border border-[#E2E8F0]">
-          <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 w-fit">
-            <TrendingUp className="w-5 h-5" />
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  1-Tap Doorstep Car & Bike Care Booking
+                </h3>
+
+                <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
+                  Discover foam washing, deep interior vacuuming, 9H ceramic spray, and complete motorcycle engine servicing with real-time GPS technician tracking.
+                </p>
+
+                <div className="space-y-2.5 text-xs text-[#E2E8F0] pt-2">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
+                    <span>Instant pricing tailored for Hatchbacks, Sedans, SUVs, and Motorcycles</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
+                    <span>Live map displaying technician route & estimated arrival countdown</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#0088FF] shrink-0" />
+                    <span>Transparent before & after photo audit uploaded straight to your app</span>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Button
+                    onClick={() => navigate('/customer')}
+                    className="bg-[#0088FF] hover:bg-[#0066CC] text-white px-6 py-3 rounded-xl font-bold"
+                  >
+                    Open Customer App <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Visual App Card Preview */}
+              <div className="bg-[#0A0F17] p-5 rounded-2xl border border-[#334155] space-y-3">
+                <div className="flex items-center justify-between text-xs text-[#94A3B8] pb-2 border-b border-[#1E293B]">
+                  <span className="font-mono text-[#0088FF]">Wipeit Customer View</span>
+                  <span className="flex items-center gap-1 text-emerald-400">● Live GPS Connected</span>
+                </div>
+                <div className="bg-[#1E293B]/60 p-3 rounded-xl border border-[#334155]/60 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#0088FF]/20 text-[#0088FF] flex items-center justify-center font-bold">🚗</div>
+                    <div>
+                      <div className="text-xs font-bold text-white">Honda City ZX</div>
+                      <div className="text-[10px] text-[#94A3B8]">KA01CQ5521 • Pearl White</div>
+                    </div>
+                  </div>
+                  <Badge variant="accent" size="sm">Active</Badge>
+                </div>
+                <div className="bg-[#0088FF]/10 border border-[#0088FF]/40 p-3.5 rounded-xl space-y-2">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-[#38BDF8]">Premium Foam Wash & Wax</span>
+                    <span className="font-bold text-white">₹449</span>
+                  </div>
+                  <div className="text-[11px] text-[#94A3B8]">Technician Rahul Verma on the way (12 mins away)</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'partner' && (
+            <motion.div
+              key="partner-tab"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25 }}
+              className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-3xl p-6 sm:p-10 border border-[#334155] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+            >
+              <div className="space-y-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5B000]/20 text-[#F5B000] text-xs font-bold">
+                  <Wrench className="w-3.5 h-3.5" /> Technician Partner Console
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  Field Technician Job & Earnings Hub
+                </h3>
+
+                <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
+                  Engineered for outdoor clarity, high contrast UI, 1-tap turn-by-turn navigation, mandatory camera audit steps, and instant daily payout tracking.
+                </p>
+
+                <div className="space-y-2.5 text-xs text-[#E2E8F0] pt-2">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#F5B000] shrink-0" />
+                    <span>High-contrast sunlight readable interface for field technicians</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#F5B000] shrink-0" />
+                    <span>Enforced before & after photo upload checklist to guarantee quality</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#F5B000] shrink-0" />
+                    <span>Transparent daily earnings breakdown & weekly direct payout bank log</span>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Button
+                    onClick={() => navigate('/partner')}
+                    className="bg-[#F5B000] hover:bg-[#D99B00] text-[#0A0F17] px-6 py-3 rounded-xl font-bold"
+                  >
+                    Open Partner Console <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Visual App Card Preview */}
+              <div className="bg-[#0A0F17] p-5 rounded-2xl border border-[#334155] space-y-3">
+                <div className="flex items-center justify-between text-xs text-[#94A3B8] pb-2 border-b border-[#1E293B]">
+                  <span className="font-mono text-[#F5B000]">Wipeit Partner Dispatch</span>
+                  <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-mono">ON DUTY</span>
+                </div>
+                <div className="bg-[#FEF9C3]/10 border border-[#F5B000]/40 p-3.5 rounded-xl space-y-2">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-[#F5B000]">Job #ACP-20901 • Koramangala</span>
+                    <span className="font-bold text-emerald-400">+₹1,850 Today</span>
+                  </div>
+                  <div className="text-[11px] text-[#94A3B8]">Arjun Mehta • Premium Foam Wash + Tyre Shine</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'admin' && (
+            <motion.div
+              key="admin-tab"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25 }}
+              className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-3xl p-6 sm:p-10 border border-[#334155] grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+            >
+              <div className="space-y-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-[#38BDF8] text-xs font-bold">
+                  <LayoutDashboard className="w-3.5 h-3.5" /> Executive Control Panel
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  Real-Time Business Operations & Dispatch Command
+                </h3>
+
+                <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
+                  Full visibility over revenue metrics, technician route assignment, service catalog pricing configurations, and customer support management.
+                </p>
+
+                <div className="space-y-2.5 text-xs text-[#E2E8F0] pt-2">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
+                    <span>Real-time dispatch drawer to reassign active technicians with 1 click</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
+                    <span>Financial analytics engine with revenue, tax, and partner commission split</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#38BDF8] shrink-0" />
+                    <span>Dynamic service catalog & multi-tier pricing grid management</span>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Button
+                    onClick={() => navigate('/admin')}
+                    className="bg-[#38BDF8] hover:bg-[#0284C7] text-[#0A0F17] px-6 py-3 rounded-xl font-bold"
+                  >
+                    Open Admin Dashboard <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Visual App Card Preview */}
+              <div className="bg-[#0A0F17] p-5 rounded-2xl border border-[#334155] space-y-3">
+                <div className="flex items-center justify-between text-xs text-[#94A3B8] pb-2 border-b border-[#1E293B]">
+                  <span className="font-mono text-[#38BDF8]">Wipeit Admin Operations</span>
+                  <span className="text-xs text-[#94A3B8]">Live Server Stream</span>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-[#1E293B] p-3 rounded-xl border border-[#334155]">
+                    <div className="text-[10px] text-[#94A3B8]">Today's Revenue</div>
+                    <div className="text-base font-extrabold text-white">₹48,920</div>
+                  </div>
+                  <div className="bg-[#1E293B] p-3 rounded-xl border border-[#334155]">
+                    <div className="text-[10px] text-[#94A3B8]">Active Jobs</div>
+                    <div className="text-base font-extrabold text-emerald-400">14 Active</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Dedicated Bike Services Section */}
+        <div className="pt-8 space-y-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#1E293B] pb-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold mb-2">
+                <Bike className="w-3.5 h-3.5" /> Full Two-Wheeler Care Package
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Complete Bike Services Range</h2>
+              <p className="text-xs sm:text-sm text-[#94A3B8] mt-1">
+                Precision doorstep maintenance, tuning, and detailing built specifically for motorcycles & scooters.
+              </p>
+            </div>
+
+            <Button
+              onClick={() => navigate('/customer/catalog')}
+              className="bg-[#1E293B] hover:bg-[#334155] text-white border border-[#334155] text-xs font-semibold shrink-0"
+            >
+              Explore Bike Catalog <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
           </div>
-          <h4 className="font-bold text-xs text-[#0F172A]">Revenue & Payout Engine</h4>
-          <p className="text-[11px] text-[#64748B]">
-            Automated partner revenue split calculations and financial reconciliation.
-          </p>
-        </Card>
+
+          {/* Bike Services Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {bikeServicesList.map((item, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -3 }}
+                onClick={() => navigate('/customer/catalog')}
+                className="bg-[#0F172A] p-3.5 rounded-2xl border border-[#1E293B] hover:border-[#0088FF]/60 cursor-pointer transition-all space-y-1.5"
+              >
+                <div className="text-2xl">{item.icon}</div>
+                <div className="text-xs font-bold text-white line-clamp-1">{item.title}</div>
+                <div className="text-[11px] text-[#94A3B8] line-clamp-1">{item.desc}</div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="bg-gradient-to-r from-[#0088FF]/10 via-[#0F172A] to-[#F5B000]/10 p-4 sm:p-6 rounded-2xl border border-[#334155] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <div className="text-xs font-bold text-[#F5B000]">✨ Plus Wash, Deep Cleaning, Polishing & Detailing</div>
+              <div className="text-xs text-[#94A3B8]">Includes 9H Nano Ceramic Coating for fuel tanks, exhaust pipes & alloy wheels.</div>
+            </div>
+            <Button
+              size="sm"
+              onClick={() => navigate('/customer/catalog')}
+              className="bg-[#0088FF] hover:bg-[#0066CC] text-white font-bold shrink-0"
+            >
+              Book Bike Care <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+        </div>
+
+        {/* End-to-End Workflow Section */}
+        <div className="pt-6 space-y-6">
+          <div className="text-center space-y-2">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-white">How the Wipeit Engine Works</h3>
+            <p className="text-xs text-[#94A3B8]">Seamless transparency from doorstep booking to verified job completion.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Card className="p-4 bg-[#0F172A] border border-[#1E293B] space-y-3">
+              <div className="w-8 h-8 rounded-xl bg-[#0088FF]/20 text-[#0088FF] font-bold flex items-center justify-center text-xs">
+                1
+              </div>
+              <h4 className="font-bold text-xs text-white">Select Service & Slot</h4>
+              <p className="text-[11px] text-[#94A3B8]">
+                Choose car or bike care, select doorstep time slot, and lock upfront price.
+              </p>
+            </Card>
+
+            <Card className="p-4 bg-[#0F172A] border border-[#1E293B] space-y-3">
+              <div className="w-8 h-8 rounded-xl bg-[#F5B000]/20 text-[#F5B000] font-bold flex items-center justify-center text-xs">
+                2
+              </div>
+              <h4 className="font-bold text-xs text-white">Live Partner GPS Dispatch</h4>
+              <p className="text-[11px] text-[#94A3B8]">
+                Technician accepts job in partner app with turn-by-turn route navigation.
+              </p>
+            </Card>
+
+            <Card className="p-4 bg-[#0F172A] border border-[#1E293B] space-y-3">
+              <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-xs">
+                3
+              </div>
+              <h4 className="font-bold text-xs text-white">Before / After Photo Audit</h4>
+              <p className="text-[11px] text-[#94A3B8]">
+                Technician uploads timestamped before & after photos for quality assurance.
+              </p>
+            </Card>
+
+            <Card className="p-4 bg-[#0F172A] border border-[#1E293B] space-y-3">
+              <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-xs">
+                4
+              </div>
+              <h4 className="font-bold text-xs text-white">Instant Revenue Sync</h4>
+              <p className="text-[11px] text-[#94A3B8]">
+                Admin dashboard updates metrics live and releases partner payout ledger.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Banner */}
+      <div className="border-t border-[#1E293B] bg-[#0A0F17] py-6 px-4 text-center text-xs text-[#94A3B8] space-y-2">
+        <div className="flex items-center justify-center gap-2">
+          <img src="/wipeit-logo.png" alt="Wipeit" className="h-6 object-contain" />
+          <span className="font-bold text-white">WIPEIT ENTERPRISE PLATFORM</span>
+        </div>
+        <p>© 2026 Wipeit Mobility & Detailing Technologies. All rights reserved.</p>
       </div>
     </div>
   );
 };
+
+export default LandingPortalView;

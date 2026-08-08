@@ -42,7 +42,7 @@ export const CustomerHomeView: React.FC = () => {
         </div>
 
         <Badge variant="accent">
-          {currentCustomer.membershipTier || 'Member'}
+          Doorstep Service
         </Badge>
       </div>
 

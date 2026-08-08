@@ -56,7 +56,7 @@ export const CustomerProfileView: React.FC = () => {
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-base text-white">{currentCustomer.fullName}</h3>
               <Badge variant="accent" size="sm">
-                {currentCustomer.membershipTier || 'Gold'}
+                Verified Account
               </Badge>
             </div>
             <div className="text-xs text-[#A1A1AA] flex items-center gap-2 mt-1">

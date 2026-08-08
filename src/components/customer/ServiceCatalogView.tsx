@@ -73,8 +73,8 @@ export const ServiceCatalogView: React.FC = () => {
       {/* Service List Cards */}
       <div className="space-y-4">
         {filteredServices.map((srv) => {
-          const price = srv.pricing[activeVehicle.type] || srv.pricing.sedan;
-          const memberPrice = srv.memberPricing?.[activeVehicle.type] || Math.round(price * 0.85);
+          const rawPrice = srv.pricing[activeVehicle.type];
+          const price = (rawPrice && rawPrice > 0) ? rawPrice : (srv.pricing.bike || srv.pricing.sedan || 249);
 
           return (
             <Card key={srv.id} className="p-4 space-y-3">
@@ -82,7 +82,7 @@ export const ServiceCatalogView: React.FC = () => {
                 <img
                   src={srv.heroImage}
                   alt={srv.name}
-                  className="w-28 h-28 rounded-xl object-cover shrink-0"
+                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl object-cover shrink-0"
                 />
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
@@ -115,9 +115,8 @@ export const ServiceCatalogView: React.FC = () => {
                 <div>
                   <div className="flex items-baseline gap-2">
                     <span className="text-base font-bold text-[#18181B]">₹{price}</span>
-                    <span className="text-xs text-[#17A34A] font-semibold">Gold: ₹{memberPrice}</span>
                   </div>
-                  <span className="text-[10px] text-[#9CA3AF]">Taxes included</span>
+                  <span className="text-[10px] text-[#9CA3AF]">Taxes & Doorstep service included</span>
                 </div>
 
                 <Button onClick={() => handleSelectService(srv)}>

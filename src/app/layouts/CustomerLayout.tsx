@@ -15,8 +15,8 @@ export const CustomerLayout: React.FC = () => {
           <Outlet />
         </div>
 
-        {/* Fixed Bottom Navigation Bar (100% Responsive for Real Mobile & Desktop Mockup) */}
-        <nav className="fixed md:absolute bottom-0 left-0 right-0 h-16 bg-white border-t border-[#E2E8F0] flex items-center justify-around px-2 z-50 pb-[env(safe-area-inset-bottom,0px)] shadow-lg max-w-full md:max-w-[430px] mx-auto">
+        {/* Bottom Navigation Bar */}
+        <nav className="absolute bottom-0 left-0 right-0 h-16 bg-white border-t border-[#E2E8F0] flex items-center justify-around px-2 z-50 pb-[env(safe-area-inset-bottom,0px)] shadow-lg w-full">
           <NavLink
             to="/customer"
             end
@@ -43,18 +43,6 @@ export const CustomerLayout: React.FC = () => {
             {activeBooking && (
               <span className="absolute top-1 right-3 w-2 h-2 rounded-full bg-[#F5B000] animate-ping" />
             )}
-          </NavLink>
-
-          <NavLink
-            to="/customer/membership"
-            className={({ isActive }) =>
-              `flex flex-col items-center justify-center gap-1 px-3 py-1 rounded-xl transition-all min-h-[48px] w-full ${
-                isActive ? 'text-[#0088FF] font-bold' : 'text-[#64748B] hover:text-[#0F172A]'
-              }`
-            }
-          >
-            <ShieldCheck className="w-5 h-5 shrink-0" />
-            <span className="text-[11px] leading-none">Club</span>
           </NavLink>
 
           <NavLink

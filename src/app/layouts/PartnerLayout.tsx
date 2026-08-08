@@ -41,8 +41,8 @@ export const PartnerLayout: React.FC = () => {
           <Outlet />
         </div>
 
-        {/* Fixed Bottom Partner Navigation Bar */}
-        <nav className="fixed md:absolute bottom-0 left-0 right-0 h-16 bg-white border-t border-[#E2E8F0] flex items-center justify-around px-2 z-50 pb-[env(safe-area-inset-bottom,0px)] shadow-lg max-w-full md:max-w-[430px] mx-auto">
+        {/* Bottom Partner Navigation Bar */}
+        <nav className="absolute bottom-0 left-0 right-0 h-16 bg-white border-t border-[#E2E8F0] flex items-center justify-around px-2 z-50 pb-[env(safe-area-inset-bottom,0px)] shadow-lg w-full">
           <NavLink
             to="/partner"
             end
