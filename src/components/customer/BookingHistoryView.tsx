@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, ChevronRight, Download, RefreshCw } from 'lucide-react';
+import { Calendar, ChevronRight, ChevronLeft, Download, RefreshCw } from 'lucide-react';
 import { useBooking } from '../../context/BookingContext';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
@@ -24,9 +24,18 @@ export const BookingHistoryView: React.FC = () => {
 
   return (
     <div className="p-4 space-y-4">
-      <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3">
-        <h2 className="text-base font-bold text-[#18181B]">My Bookings</h2>
-        <span className="text-xs text-[#6B7280]">{bookings.length} Total</span>
+      {/* Header Back Step */}
+      <div className="flex items-center gap-3 border-b border-[#E2E8F0] pb-3">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] transition-colors shrink-0"
+        >
+          <ChevronLeft className="w-5 h-5 text-[#0F172A]" />
+        </button>
+        <div className="flex-1 min-w-0">
+          <h2 className="text-base font-extrabold text-[#0F172A] tracking-tight">My Bookings</h2>
+          <p className="text-[11px] text-[#64748B]">{bookings.length} Total Services</p>
+        </div>
       </div>
 
       {/* Tabs Switcher */}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Check, Sparkles, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ShieldCheck, Check, Sparkles, Star, ChevronLeft } from 'lucide-react';
 import { useBooking } from '../../context/BookingContext';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
@@ -7,11 +8,25 @@ import { Badge } from '../ui/Badge';
 import { MEMBERSHIP_PLANS } from '../../constants/mockData';
 
 export const MembershipView: React.FC = () => {
+  const navigate = useNavigate();
   const { currentCustomer } = useBooking();
   const [selectedPlanId, setSelectedPlanId] = useState<string>('PLAN-02'); // Gold
 
   return (
     <div className="p-4 space-y-4">
+      {/* Top Header with Back Button */}
+      <div className="flex items-center gap-3 pt-1 pb-1">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] transition-colors"
+        >
+          <ChevronLeft className="w-5 h-5 text-[#0F172A]" />
+        </button>
+        <div>
+          <h2 className="text-base font-extrabold text-[#0F172A] tracking-tight">Wipeit Membership</h2>
+          <p className="text-[11px] text-[#64748B]">Exclusive benefits & free washes</p>
+        </div>
+      </div>
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-[#18181B] to-[#27272A] text-white p-5 rounded-2xl shadow-lg border border-[#3F3F46] space-y-2">
         <div className="flex items-center justify-between">

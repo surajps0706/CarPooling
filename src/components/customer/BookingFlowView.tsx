@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Calendar, Clock, MapPin, CreditCard, ShieldCheck, CheckCircle2, Tag, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, CreditCard, ShieldCheck, CheckCircle2, Tag, ChevronRight, ChevronLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useBooking } from '../../context/BookingContext';
 import { Card } from '../ui/Card';
@@ -173,11 +173,23 @@ export const BookingFlowView: React.FC = () => {
     <div className="p-4 space-y-5">
       {/* Header Back Step */}
       <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
-        <h2 className="text-sm sm:text-base font-bold text-[#0F172A]">
-          {step === 'slot' && '1. Select Date & Slot'}
-          {step === 'summary' && '2. Review Booking Summary'}
-          {step === 'payment' && '3. Complete Payment'}
-        </h2>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => {
+              if (step === 'payment') setStep('summary');
+              else if (step === 'summary') setStep('slot');
+              else navigate(-1);
+            }}
+            className="p-2 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5 text-[#0F172A]" />
+          </button>
+          <h2 className="text-sm sm:text-base font-bold text-[#0F172A]">
+            {step === 'slot' && '1. Select Date & Slot'}
+            {step === 'summary' && '2. Review Booking Summary'}
+            {step === 'payment' && '3. Complete Payment'}
+          </h2>
+        </div>
         <span className="text-xs text-[#64748B] font-mono">Step {step === 'slot' ? '1/3' : step === 'summary' ? '2/3' : '3/3'}</span>
       </div>
 

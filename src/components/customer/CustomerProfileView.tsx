@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Car, MapPin, ShieldCheck, Wallet, Share2, Phone, Mail, Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Car, MapPin, ShieldCheck, Wallet, Share2, Phone, Mail, Plus, ChevronLeft } from 'lucide-react';
 import { useBooking } from '../../context/BookingContext';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
@@ -8,6 +9,7 @@ import { Modal } from '../ui/Modal';
 import { Input } from '../ui/Input';
 
 export const CustomerProfileView: React.FC = () => {
+  const navigate = useNavigate();
   const {
     currentCustomer,
     vehicles,
@@ -42,8 +44,28 @@ export const CustomerProfileView: React.FC = () => {
     setRegNo('');
   };
 
+  const getVehicleEmoji = (vType: string) => {
+    if (vType === 'bike') return '🏍️';
+    if (vType === 'suv' || vType === 'muv') return '🚙';
+    return '🚗';
+  };
+
   return (
     <div className="p-4 space-y-4">
+      {/* Top Header with Back Button */}
+      <div className="flex items-center gap-3 pt-1 pb-1">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] transition-colors"
+        >
+          <ChevronLeft className="w-5 h-5 text-[#0F172A]" />
+        </button>
+        <div>
+          <h2 className="text-base font-extrabold text-[#0F172A] tracking-tight">My Profile & Garage</h2>
+          <p className="text-[11px] text-[#64748B]">Manage vehicles and account details</p>
+        </div>
+      </div>
+
       {/* Customer Avatar & Header Card */}
       <Card className="p-4 bg-gradient-to-br from-[#18181B] to-[#27272A] text-white">
         <div className="flex items-center gap-4">
@@ -108,7 +130,7 @@ export const CustomerProfileView: React.FC = () => {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-[#F4F5F7] flex items-center justify-center font-bold text-sm">
-                    {v.type === 'sedan' ? '🚗' : v.type === 'suv' ? '🚙' : '🏍️'}
+                    {getVehicleEmoji(v.type)}
                   </div>
                   <div>
                     <div className="text-xs font-bold text-[#18181B]">{v.make} {v.model}</div>

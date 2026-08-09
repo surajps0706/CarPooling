@@ -88,30 +88,30 @@ export const CustomerHomeView: React.FC = () => {
       <div className="bg-[#F1F5F9] p-1 rounded-2xl flex items-center shadow-inner">
         <button
           onClick={() => handleToggleMode('car')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-200 ${
             !isBikeMode
               ? 'bg-white text-[#1D4ED8] shadow-md border border-[#BFDBFE]'
               : 'text-[#64748B] hover:text-[#0F172A]'
           }`}
         >
           <span className="text-base">🚗</span>
-          Car Services
+          Car
         </button>
         <button
           onClick={() => handleToggleMode('bike')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-200 ${
             isBikeMode
               ? 'bg-[#059669] text-white shadow-md'
               : 'text-[#64748B] hover:text-[#0F172A]'
           }`}
         >
           <span className="text-base">🏍️</span>
-          Bike Services
+          Bike
         </button>
       </div>
 
       {/* Location Bar */}
-      <div className="bg-white p-2.5 rounded-xl border border-[#E2E8F0] flex items-center justify-between text-xs">
+      <div className="bg-white p-2.5 rounded-xl border border-[#E2E8F0] flex items-center justify-between text-xs shadow-sm">
         <div className="flex items-center gap-2">
           <MapPin className="w-4 h-4 text-[#0088FF]" />
           <span className="font-medium text-[#0F172A] truncate">
@@ -127,37 +127,37 @@ export const CustomerHomeView: React.FC = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={() => navigate('/customer/tracking')}
-          className="cursor-pointer bg-gradient-to-r from-[#0A0F17] to-[#0F172A] text-white p-4 rounded-2xl shadow-lg border border-[#1E293B] relative overflow-hidden"
+          className="cursor-pointer bg-[#0A0F1D] text-white p-4 rounded-2xl shadow-xl border border-slate-800 relative overflow-hidden"
         >
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#F5B000] animate-ping" />
-              <span className="text-xs font-bold text-[#F5B000] uppercase tracking-wide">
-                Live Active Service
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
+              <span className="text-[11px] font-black text-amber-400 uppercase tracking-wider">
+                LIVE ACTIVE SERVICE
               </span>
             </div>
-            <Badge variant="warning" size="sm">
+            <span className="bg-amber-400 text-slate-950 font-black text-[10px] uppercase px-2 py-0.5 rounded-full">
               {getStatusBadgeVariant(activeBooking.status).label}
-            </Badge>
+            </span>
           </div>
 
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="font-bold text-sm text-white">{activeBooking.service.name}</h4>
-              <p className="text-xs text-[#94A3B8]">
+              <h4 className="font-extrabold text-sm text-white">{activeBooking.service.name}</h4>
+              <p className="text-xs text-slate-300 font-medium mt-0.5">
                 {activeBooking.partner?.fullName} is servicing your {activeBooking.vehicle.make} {activeBooking.vehicle.model}
               </p>
             </div>
-            <ChevronRight className="w-5 h-5 text-white/70" />
+            <ChevronRight className="w-5 h-5 text-white/80 shrink-0" />
           </div>
         </motion.div>
       )}
 
       {/* Active Vehicle Selector Strip */}
-      <div className="bg-white p-3 rounded-2xl border border-[#E2E8F0] flex items-center justify-between">
+      <div className="bg-white p-3 rounded-2xl border border-[#E2E8F0] flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#F8FAFC] flex items-center justify-center font-bold text-sm">
-            {activeVehicle.type === 'sedan' ? '🚗' : activeVehicle.type === 'suv' ? '🚙' : '🏍️'}
+          <div className="w-10 h-10 rounded-xl bg-[#F8FAFC] flex items-center justify-center font-bold text-base border border-[#E2E8F0]">
+            {activeVehicle.type === 'bike' ? '🏍️' : activeVehicle.type === 'suv' || activeVehicle.type === 'muv' ? '🚙' : '🚗'}
           </div>
           <div>
             <div className="text-xs font-bold text-[#0F172A]">
@@ -181,7 +181,7 @@ export const CustomerHomeView: React.FC = () => {
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.98 }}
         onClick={() => navigate('/customer/puncture')}
-        className="cursor-pointer bg-gradient-to-r from-[#DC2626] via-[#B91C1C] to-[#991B1B] text-white p-3.5 rounded-2xl shadow-lg border border-red-500/30 relative overflow-hidden flex items-center justify-between"
+        className="cursor-pointer bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white p-4 rounded-2xl shadow-xl border border-red-500/40 relative overflow-hidden flex items-center justify-between"
       >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-xl shrink-0">
@@ -189,24 +189,24 @@ export const CustomerHomeView: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h4 className="font-extrabold text-sm text-white tracking-tight">PUNCTURE ASSISTANCE</h4>
-              <span className="bg-yellow-400 text-black text-[9px] font-black px-1.5 py-0.5 rounded uppercase">
+              <h4 className="font-black text-base text-white tracking-tight">PUNCTURE ASSISTANCE</h4>
+              <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded uppercase shadow-sm">
                 15-20 MIN DISPATCH
               </span>
             </div>
-            <p className="text-[11px] text-red-100 font-medium">
+            <p className="text-xs text-red-100 font-medium mt-0.5">
               Tubeless plug, tube patch, air leak & valve core replacement
             </p>
           </div>
         </div>
-        <ChevronRight className="w-5 h-5 text-white/80 shrink-0" />
+        <ChevronRight className="w-5 h-5 text-white shrink-0" />
       </motion.div>
 
       {/* Service Categories — Dynamically Filtered based on Mode */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold text-[#0F172A] tracking-tight">
-            {isBikeMode ? '🏍️ Bike Service Categories' : '🚗 Car Service Categories'}
+            Service Categories
           </h3>
           <button onClick={() => navigate('/customer/catalog')} className="text-xs font-semibold text-[#0088FF]">
             View All
@@ -214,13 +214,13 @@ export const CustomerHomeView: React.FC = () => {
         </div>
 
         <div className={`rounded-2xl border p-3.5 ${isBikeMode ? 'bg-[#F0FDF4] border-[#BBF7D0]' : 'bg-[#EFF6FF] border-[#BFDBFE]'}`}>
-          <div className="flex items-center gap-2 mb-2.5">
-            <span className="text-lg leading-none">{isBikeMode ? '🏍️' : '🚗'}</span>
-            <span className={`text-[13px] font-bold ${isBikeMode ? 'text-[#15803D]' : 'text-[#1D4ED8]'}`}>
-              {isBikeMode ? 'Bike Care Packages' : 'Car Care Packages'}
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-base leading-none">{isBikeMode ? '🏍️' : '🚗'}</span>
+            <span className={`text-xs font-extrabold ${isBikeMode ? 'text-[#15803D]' : 'text-[#1D4ED8]'}`}>
+              {isBikeMode ? 'Bike Packages' : 'Car Packages'}
             </span>
-            <span className={`ml-auto text-[10px] font-semibold ${isBikeMode ? 'text-[#15803D]' : 'text-[#1D4ED8]'} opacity-60`}>
-              {activeCategories.length} categories
+            <span className={`ml-auto text-[10px] font-bold ${isBikeMode ? 'text-[#15803D]' : 'text-[#1D4ED8]'} opacity-75`}>
+              {activeCategories.length} Categories
             </span>
           </div>
 
@@ -238,16 +238,16 @@ export const CustomerHomeView: React.FC = () => {
                       navigate('/customer/catalog', { state: { categoryId: cat.id } });
                     }
                   }}
-                  className={`flex items-center gap-2 bg-white border border-white/80 p-2.5 rounded-xl text-[11.5px] font-semibold hover:border-[#0088FF] transition-all shadow-sm text-left ${
-                    isPunctureCat ? 'text-red-700 bg-red-50/50 border-red-200' : 'text-[#374151]'
+                  className={`flex items-center gap-2 bg-white border p-2.5 rounded-xl text-[11.5px] font-semibold transition-all shadow-sm text-left ${
+                    isPunctureCat ? 'text-red-700 bg-red-50/70 border-red-200 hover:border-red-400' : 'text-[#374151] border-slate-200/80 hover:border-[#0088FF]'
                   }`}
                 >
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${isPunctureCat ? 'bg-red-100 text-red-600' : 'bg-[#F8FAFC]'}`}>
                     {isPunctureCat ? '🚨' : getCategoryIcon(cat.iconName)}
                   </div>
                   <div className="truncate">
-                    <div className="font-bold leading-snug truncate flex items-center gap-1">
-                      <span>{cat.name}</span>
+                    <div className="font-bold leading-snug truncate">
+                      {cat.name}
                     </div>
                     <div className="text-[9.5px] text-[#9CA3AF] font-normal truncate">{cat.description}</div>
                   </div>
@@ -258,54 +258,92 @@ export const CustomerHomeView: React.FC = () => {
         </div>
       </div>
 
-      {/* Featured Services Grid */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
+      {/* Featured Service Packages (Distinct Visual Card Layout) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-[#0F172A] tracking-tight">
-            {isBikeMode ? 'Wipeit Bike Services' : 'Wipeit Car Services'}
+            {isBikeMode ? 'Featured Bike Packages' : 'Featured Car Packages'}
           </h3>
-          <span className="text-xs text-[#64748B]">Price for {activeVehicle.make}</span>
+          <span className="text-[11px] font-semibold text-[#64748B]">For {activeVehicle.make} {activeVehicle.model}</span>
         </div>
 
         <div className="grid grid-cols-1 gap-3">
           {activePackages.slice(0, 4).map((srv) => {
-            const price = srv.pricing[activeVehicle.type] || srv.pricing.bike || srv.pricing.sedan || 199;
+            const rawPrice = srv.pricing[activeVehicle.type];
+            const price = rawPrice && rawPrice > 0 ? rawPrice : (srv.pricing.bike || srv.pricing.sedan || 199);
+            const memberPrice = srv.memberPricing ? (srv.memberPricing[activeVehicle.type] || Math.round(price * 0.85)) : Math.round(price * 0.85);
 
             return (
-              <Card key={srv.id} hoverable onClick={() => navigate('/customer/catalog')}>
-                <div className="flex gap-3">
+              <div
+                key={srv.id}
+                className="bg-white rounded-2xl border border-[#E2E8F0] overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              >
+                {/* Hero banner image with duration & popular badge overlays */}
+                <div className="relative h-32 w-full overflow-hidden">
                   <img
                     src={srv.heroImage}
                     alt={srv.name}
-                    className="w-24 h-24 rounded-xl object-cover shrink-0"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-bold text-xs text-[#0F172A] line-clamp-1">{srv.name}</h4>
-                        {srv.isPopular && (
-                          <Badge variant="accent" size="sm">
-                            Popular
-                          </Badge>
-                        )}
-                      </div>
-                      <p className="text-[11px] text-[#64748B] line-clamp-2 mt-1 leading-relaxed">
-                        {srv.description}
-                      </p>
-                    </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                    <div className="flex items-center justify-between pt-2 border-t border-[#E2E8F0]">
-                      <div>
-                        <span className="text-xs text-[#64748B]">{srv.durationMinutes} mins • </span>
-                        <span className="font-bold text-sm text-[#0F172A]">₹{price}</span>
-                      </div>
-                      <Button size="sm" onClick={() => navigate('/customer/catalog')}>
-                        Book Now
-                      </Button>
+                  {/* Top badges */}
+                  <div className="absolute top-2 left-2 flex items-center gap-1.5">
+                    <span className="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                      ⏱️ {srv.durationMinutes} Mins
+                    </span>
+                  </div>
+
+                  {srv.isPopular && (
+                    <div className="absolute top-2 right-2 bg-[#F5B000] text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-full uppercase shadow">
+                      POPULAR
                     </div>
+                  )}
+
+                  {/* Service Title over banner */}
+                  <div className="absolute bottom-2 left-3 right-3 text-white">
+                    <h4 className="font-extrabold text-sm text-white drop-shadow-sm">{srv.name}</h4>
                   </div>
                 </div>
-              </Card>
+
+                {/* Card Body & Feature Pills */}
+                <div className="p-3 space-y-2.5">
+                  <p className="text-xs text-[#475569] leading-relaxed line-clamp-2">
+                    {srv.description}
+                  </p>
+
+                  {/* Key Inclusion Chips */}
+                  {srv.inclusions && srv.inclusions.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {srv.inclusions.slice(0, 3).map((inc, i) => (
+                        <span key={i} className="text-[10px] font-semibold text-[#0088FF] bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100/80">
+                          ✓ {inc}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Bottom Price & Direct Booking CTA */}
+                  <div className="flex items-center justify-between pt-2 border-t border-[#F1F5F9]">
+                    <div>
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-base font-extrabold text-[#0F172A]">₹{price}</span>
+                        <span className="text-[10px] font-bold text-[#059669] bg-emerald-50 px-1.5 py-0.5 rounded">
+                          Gold: ₹{memberPrice}
+                        </span>
+                      </div>
+                    </div>
+
+                    <Button
+                      size="sm"
+                      onClick={() => navigate('/customer/book', { state: { service: srv } })}
+                      className="bg-[#0088FF] hover:bg-[#0066CC] text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm"
+                    >
+                      Book Now
+                    </Button>
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Phone, MessageSquare, MapPin, Navigation, ShieldCheck, Camera, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Phone, MessageSquare, MapPin, Navigation, ShieldCheck, Camera, Star, ChevronLeft } from 'lucide-react';
 import { useBooking } from '../../context/BookingContext';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
@@ -9,6 +10,7 @@ import { RatingStars } from '../ui/RatingStars';
 import { getStatusBadgeVariant } from '../../utils/formatters';
 
 export const BookingTrackingView: React.FC = () => {
+  const navigate = useNavigate();
   const { activeBooking, activePartner, rateBooking } = useBooking();
   const [rating, setRating] = useState<number>(5);
   const [reviewText, setReviewText] = useState<string>('');
@@ -42,12 +44,16 @@ export const BookingTrackingView: React.FC = () => {
   return (
     <div className="p-4 space-y-4">
       {/* Top Header */}
-      <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3">
-        <div>
-          <span className="text-[10px] uppercase font-semibold text-[#6B7280]">Live Booking Status</span>
-          <h2 className="text-base font-bold text-[#18181B] flex items-center gap-2">
-            Ref #{booking.bookingRef}
-          </h2>
+      <div className="flex items-center gap-3 border-b border-[#E5E7EB] pb-3">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] transition-colors shrink-0"
+        >
+          <ChevronLeft className="w-5 h-5 text-[#0F172A]" />
+        </button>
+        <div className="flex-1 min-w-0">
+          <h2 className="text-base font-extrabold text-[#0F172A] tracking-tight">Live Service Tracking</h2>
+          <p className="text-[11px] text-[#64748B]">Ref: #{booking.bookingRef}</p>
         </div>
         <Badge variant="warning">
           {getStatusBadgeVariant(booking.status).label}

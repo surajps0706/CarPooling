@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Check, Clock, ChevronRight, Droplets, Sparkles, Shield, Gem, Bike, Wrench, Zap } from 'lucide-react';
+import { Check, Clock, ChevronRight, ChevronLeft, Droplets, Sparkles, Shield, Gem, Bike, Wrench, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '../../context/BookingContext';
 import { Button } from '../ui/Button';
@@ -19,14 +19,12 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 };
 
 const CATEGORY_COLORS: Record<string, { badge: string; text: string }> = {
-  'CAT-01': { badge: 'bg-blue-100 text-blue-700',    text: 'text-blue-600' },
-  'CAT-02': { badge: 'bg-violet-100 text-violet-700', text: 'text-violet-600' },
-  'CAT-03': { badge: 'bg-amber-100 text-amber-700',   text: 'text-amber-600' },
-  'CAT-04': { badge: 'bg-cyan-100 text-cyan-700',     text: 'text-cyan-600' },
-  'CAT-05': { badge: 'bg-emerald-100 text-emerald-700', text: 'text-emerald-600' },
-  'CAT-06': { badge: 'bg-orange-100 text-orange-700', text: 'text-orange-600' },
-  'CAT-07': { badge: 'bg-teal-100 text-teal-700',     text: 'text-teal-600' },
-  'CAT-08': { badge: 'bg-indigo-100 text-indigo-700', text: 'text-indigo-600' },
+  'CAT-CAR-01': { badge: 'bg-blue-100 text-blue-700', text: 'text-blue-600' },
+  'CAT-CAR-02': { badge: 'bg-violet-100 text-violet-700', text: 'text-violet-600' },
+  'CAT-CAR-03': { badge: 'bg-amber-100 text-amber-700', text: 'text-amber-600' },
+  'CAT-CAR-04': { badge: 'bg-cyan-100 text-cyan-700', text: 'text-cyan-600' },
+  'CAT-BK-01': { badge: 'bg-emerald-100 text-emerald-700', text: 'text-emerald-600' },
+  'CAT-BK-02': { badge: 'bg-orange-100 text-orange-700', text: 'text-orange-600' },
 };
 
 export const ServiceCatalogView: React.FC = () => {
@@ -147,14 +145,18 @@ export const ServiceCatalogView: React.FC = () => {
     <div className="flex flex-col">
       {/* ── Sticky header + mode toggle + tabs ── */}
       <div className="px-4 pt-4 pb-3 bg-[#FAFAF8] border-b border-[#EBEBED]">
-        <div className="flex items-center justify-between mb-3">
-          <div>
+        <div className="flex items-center gap-3 mb-3">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] transition-colors shrink-0"
+          >
+            <ChevronLeft className="w-5 h-5 text-[#0F172A]" />
+          </button>
+          <div className="flex-1 min-w-0">
             <h2 className="text-[17px] font-bold text-[#111827] tracking-tight">Service Catalog</h2>
-            <p className="text-[11.5px] text-[#6B7280] mt-0.5">
+            <p className="text-[11.5px] text-[#6B7280] mt-0.5 truncate">
               Prices for{' '}
               <span className="font-semibold text-[#374151]">{activeVehicle.make} {activeVehicle.model}</span>
-              {' '}·{' '}
-              <span className="font-semibold text-[#374151] capitalize">{activeVehicle.type}</span>
             </p>
           </div>
 
@@ -170,19 +172,19 @@ export const ServiceCatalogView: React.FC = () => {
         <div className="bg-[#E2E8F0] p-1 rounded-xl flex items-center mb-3">
           <button
             onClick={() => handleToggleMode('car')}
-            className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`flex-1 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
               !isBikeMode ? 'bg-white text-[#1D4ED8] shadow-sm' : 'text-[#64748B]'
             }`}
           >
-            🚗 Car Services
+            🚗 Car
           </button>
           <button
             onClick={() => handleToggleMode('bike')}
-            className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`flex-1 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
               isBikeMode ? 'bg-[#059669] text-white shadow-sm' : 'text-[#64748B]'
             }`}
           >
-            🏍️ Bike Services
+            🏍️ Bike
           </button>
         </div>
 
