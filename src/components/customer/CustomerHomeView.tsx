@@ -176,6 +176,32 @@ export const CustomerHomeView: React.FC = () => {
         </button>
       </div>
 
+      {/* Urgent Puncture Service SOS Quick Action Banner */}
+      <motion.div
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={() => navigate('/customer/puncture')}
+        className="cursor-pointer bg-gradient-to-r from-[#DC2626] via-[#B91C1C] to-[#991B1B] text-white p-3.5 rounded-2xl shadow-lg border border-red-500/30 relative overflow-hidden flex items-center justify-between"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-xl shrink-0">
+            🚨
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h4 className="font-extrabold text-sm text-white tracking-tight">PUNCTURE ASSISTANCE</h4>
+              <span className="bg-yellow-400 text-black text-[9px] font-black px-1.5 py-0.5 rounded uppercase">
+                15-20 MIN DISPATCH
+              </span>
+            </div>
+            <p className="text-[11px] text-red-100 font-medium">
+              Tubeless plug, tube patch, air leak & valve core replacement
+            </p>
+          </div>
+        </div>
+        <ChevronRight className="w-5 h-5 text-white/80 shrink-0" />
+      </motion.div>
+
       {/* Service Categories — Dynamically Filtered based on Mode */}
       <div>
         <div className="flex items-center justify-between mb-3">
@@ -199,22 +225,35 @@ export const CustomerHomeView: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            {activeCategories.map((cat) => (
-              <motion.button
-                key={cat.id}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate('/customer/catalog', { state: { categoryId: cat.id } })}
-                className="flex items-center gap-2 bg-white border border-white/80 p-2.5 rounded-xl text-[11.5px] font-semibold text-[#374151] hover:border-[#0088FF] hover:text-[#0088FF] transition-all shadow-sm text-left"
-              >
-                <div className="w-7 h-7 rounded-lg bg-[#F8FAFC] flex items-center justify-center shrink-0">
-                  {getCategoryIcon(cat.iconName)}
-                </div>
-                <div className="truncate">
-                  <div className="font-bold leading-snug truncate">{cat.name}</div>
-                  <div className="text-[9.5px] text-[#9CA3AF] font-normal truncate">{cat.description}</div>
-                </div>
-              </motion.button>
-            ))}
+            {activeCategories.map((cat) => {
+              const isPunctureCat = cat.name.toLowerCase().includes('puncture') || cat.slug.toLowerCase().includes('puncture');
+              return (
+                <motion.button
+                  key={cat.id}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    if (isPunctureCat) {
+                      navigate('/customer/puncture');
+                    } else {
+                      navigate('/customer/catalog', { state: { categoryId: cat.id } });
+                    }
+                  }}
+                  className={`flex items-center gap-2 bg-white border border-white/80 p-2.5 rounded-xl text-[11.5px] font-semibold hover:border-[#0088FF] transition-all shadow-sm text-left ${
+                    isPunctureCat ? 'text-red-700 bg-red-50/50 border-red-200' : 'text-[#374151]'
+                  }`}
+                >
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${isPunctureCat ? 'bg-red-100 text-red-600' : 'bg-[#F8FAFC]'}`}>
+                    {isPunctureCat ? '🚨' : getCategoryIcon(cat.iconName)}
+                  </div>
+                  <div className="truncate">
+                    <div className="font-bold leading-snug truncate flex items-center gap-1">
+                      <span>{cat.name}</span>
+                    </div>
+                    <div className="text-[9.5px] text-[#9CA3AF] font-normal truncate">{cat.description}</div>
+                  </div>
+                </motion.button>
+              );
+            })}
           </div>
         </div>
       </div>

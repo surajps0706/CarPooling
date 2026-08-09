@@ -47,6 +47,7 @@ interface BookingContextType {
     couponCode?: string,
     specialInstructions?: string
   ) => Booking;
+  addDirectBooking: (booking: Booking) => void;
   updateBookingStatus: (bookingId: string, status: BookingStatus, note?: string) => void;
   addBookingPhoto: (bookingId: string, type: 'before' | 'after', photoUrl: string, angleLabel: any) => void;
   acceptPartnerJob: (bookingId: string) => void;
@@ -176,6 +177,21 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return newBooking;
   };
 
+  const addDirectBooking = (newBooking: Booking) => {
+    setBookings((prev) => [newBooking, ...prev]);
+
+    const newNotif: NotificationItem = {
+      id: `NOTIF-${Date.now()}`,
+      title: '🚨 Puncture Emergency Dispatch Active!',
+      body: `Technician assigned for Puncture Service #${newBooking.bookingRef}. ETA ~15-20 Mins.`,
+      type: 'booking',
+      timestamp: 'Just now',
+      isRead: false,
+      bookingId: newBooking.id
+    };
+    setNotifications((prev) => [newNotif, ...prev]);
+  };
+
   const updateBookingStatus = (bookingId: string, status: BookingStatus, _note?: string) => {
     setBookings((prev) =>
       prev.map((b) => {
@@ -274,6 +290,7 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
         addVehicle,
         addAddress,
         createBooking,
+        addDirectBooking,
         updateBookingStatus,
         addBookingPhoto,
         acceptPartnerJob,

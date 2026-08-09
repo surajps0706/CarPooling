@@ -143,6 +143,25 @@ export interface BookingStatusLog {
   timestamp: string;
 }
 
+export type TyreType = 'tubeless' | 'tube_type' | 'run_flat';
+
+export type PunctureProblemType =
+  | 'puncture'
+  | 'air_leak'
+  | 'valve_problem'
+  | 'tyre_removal'
+  | 'tyre_replacement';
+
+export interface PunctureDetails {
+  vehicleCategory: 'car' | 'bike';
+  tyreType: TyreType;
+  problem: PunctureProblemType;
+  locationType: 'current' | 'map' | 'address';
+  locationAddress: string;
+  photoUrl?: string;
+  isEmergency: boolean;
+}
+
 export interface Booking {
   id: string;
   bookingRef: string;
@@ -172,6 +191,7 @@ export interface Booking {
   customerReview?: string;
   createdAt: string;
   completedAt?: string;
+  punctureDetails?: PunctureDetails;
 }
 
 export interface MembershipPlan {

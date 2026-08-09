@@ -101,9 +101,9 @@ export const ServiceCatalogView: React.FC = () => {
   // Base service filtering for current mode
   const modeServices = SERVICE_ITEMS.filter((srv) => {
     if (isBikeMode) {
-      return srv.vehicleTypes.includes('bike') && ['CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'].includes(srv.categoryId);
+      return srv.vehicleTypes.includes('bike');
     } else {
-      return srv.vehicleTypes.some((t) => t !== 'bike') && !['CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'].includes(srv.categoryId);
+      return srv.vehicleTypes.some((t) => t !== 'bike');
     }
   });
 
@@ -118,6 +118,10 @@ export const ServiceCatalogView: React.FC = () => {
   );
 
   const handleSelectService = (srv: ServiceItem) => {
+    if (srv.slug.includes('puncture') || srv.name.toLowerCase().includes('puncture')) {
+      navigate('/customer/puncture');
+      return;
+    }
     setSelectedService(srv);
     setSelectedAddons([]);
     setIsAddonSheetOpen(true);

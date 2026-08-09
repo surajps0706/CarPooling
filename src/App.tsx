@@ -19,6 +19,7 @@ import { BookingTrackingView } from './components/customer/BookingTrackingView';
 import { BookingHistoryView } from './components/customer/BookingHistoryView';
 import { CustomerProfileView } from './components/customer/CustomerProfileView';
 import { MembershipView } from './components/customer/MembershipView';
+import { PunctureModuleView } from './components/customer/PunctureModuleView';
 
 // Partner Views
 import { PartnerDashboardView } from './components/partner/PartnerDashboardView';
@@ -51,6 +52,7 @@ export function App() {
             <Route path="customer" element={<CustomerLayout />}>
               <Route index element={<CustomerHomeView />} />
               <Route path="catalog" element={<ServiceCatalogView />} />
+              <Route path="puncture" element={<PunctureModuleView />} />
               <Route path="book" element={<BookingFlowView />} />
               <Route path="tracking" element={<BookingTrackingView />} />
               <Route path="bookings" element={<BookingHistoryView />} />
