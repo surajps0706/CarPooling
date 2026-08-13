@@ -13,6 +13,8 @@ import { LandingPortalView } from './components/landing/LandingPortalView';
 
 // Customer Views
 import { CustomerHomeView } from './components/customer/CustomerHomeView';
+import { CarCareView } from './components/customer/CarCareView';
+import { BikeCareView } from './components/customer/BikeCareView';
 import { ServiceCatalogView } from './components/customer/ServiceCatalogView';
 import { BookingFlowView } from './components/customer/BookingFlowView';
 import { BookingTrackingView } from './components/customer/BookingTrackingView';
@@ -51,6 +53,8 @@ export function App() {
             {/* Customer App Routes */}
             <Route path="customer" element={<CustomerLayout />}>
               <Route index element={<CustomerHomeView />} />
+              <Route path="car-care" element={<CarCareView />} />
+              <Route path="bike-care" element={<BikeCareView />} />
               <Route path="catalog" element={<ServiceCatalogView />} />
               <Route path="puncture" element={<PunctureModuleView />} />
               <Route path="book" element={<BookingFlowView />} />

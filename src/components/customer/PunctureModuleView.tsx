@@ -205,10 +205,11 @@ export const PunctureModuleView: React.FC = () => {
       <div className="bg-[#0F172A] text-white p-4 sticky top-0 z-30 shadow-md">
         <div className="flex items-center justify-between">
           <button
-            onClick={() => navigate(-1)}
-            className="p-1.5 rounded-full bg-[#1E293B] hover:bg-[#334155] text-white transition-colors"
+            onClick={() => navigate('/customer')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#1E293B] hover:bg-[#334155] text-white font-extrabold text-xs transition-colors shrink-0"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-4 h-4 text-[#0088FF]" />
+            <span>Back to Home</span>
           </button>
           <div className="text-center">
             <h1 className="font-extrabold text-base tracking-tight text-white flex items-center justify-center gap-1.5">

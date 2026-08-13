@@ -147,10 +147,11 @@ export const ServiceCatalogView: React.FC = () => {
       <div className="px-4 pt-4 pb-3 bg-[#FAFAF8] border-b border-[#EBEBED]">
         <div className="flex items-center gap-3 mb-3">
           <button
-            onClick={() => navigate(-1)}
-            className="p-2 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] transition-colors shrink-0"
+            onClick={() => navigate('/customer')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] font-extrabold text-xs text-[#0F172A] transition-colors shrink-0"
           >
-            <ChevronLeft className="w-5 h-5 text-[#0F172A]" />
+            <ChevronLeft className="w-4 h-4 text-[#0088FF]" />
+            <span>Back</span>
           </button>
           <div className="flex-1 min-w-0">
             <h2 className="text-[17px] font-bold text-[#111827] tracking-tight">Service Catalog</h2>

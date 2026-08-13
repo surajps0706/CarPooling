@@ -55,10 +55,11 @@ export const CustomerProfileView: React.FC = () => {
       {/* Top Header with Back Button */}
       <div className="flex items-center gap-3 pt-1 pb-1">
         <button
-          onClick={() => navigate(-1)}
-          className="p-2 rounded-xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] transition-colors"
+          onClick={() => navigate('/customer')}
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-white border border-[#E2E8F0] shadow-sm hover:bg-[#F8FAFC] font-extrabold text-xs text-[#0F172A] transition-colors shrink-0"
         >
-          <ChevronLeft className="w-5 h-5 text-[#0F172A]" />
+          <ChevronLeft className="w-4 h-4 text-[#0088FF]" />
+          <span>Back</span>
         </button>
         <div>
           <h2 className="text-base font-extrabold text-[#0F172A] tracking-tight">My Profile & Garage</h2>
