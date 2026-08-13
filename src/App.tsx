@@ -45,8 +45,8 @@ export function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<RootLayout />}>
-            {/* Landing Portal */}
-            <Route index element={<LandingPortalView />} />
+            {/* Direct to Customer App */}
+            <Route index element={<Navigate to="/customer" replace />} />
 
             {/* Customer App Routes */}
             <Route path="customer" element={<CustomerLayout />}>
