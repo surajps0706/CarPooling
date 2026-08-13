@@ -26,10 +26,10 @@ export const CustomerHomeView: React.FC = () => {
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto font-sans pb-12">
-      {/* 1. HERO HEADER SECTION */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E2E8F0] shadow-sm flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
-        <div className="space-y-4 max-w-xl z-10 text-center md:text-left">
-          <div className="flex items-center justify-center md:justify-start gap-3">
+      {/* 1. HERO HEADER SECTION (NO IMAGES) */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E2E8F0] shadow-sm relative overflow-hidden">
+        <div className="space-y-5 max-w-3xl">
+          <div className="flex items-center gap-3">
             <WipeitLogo size="md" variant="dark" />
           </div>
 
@@ -43,48 +43,33 @@ export const CustomerHomeView: React.FC = () => {
           </p>
 
           {/* Quick Trust Badges Strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            <div className="flex items-center gap-2 text-xs font-bold text-[#0F2537]">
-              <div className="w-7 h-7 rounded-full bg-[#0088FF]/10 text-[#0088FF] flex items-center justify-center shrink-0">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F2537]">
+              <div className="w-8 h-8 rounded-full bg-[#0088FF]/10 text-[#0088FF] flex items-center justify-center shrink-0">
                 <CheckCircle2 className="w-4 h-4" />
               </div>
               Verified Experts
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-[#0F2537]">
-              <div className="w-7 h-7 rounded-full bg-[#0088FF]/10 text-[#0088FF] flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F2537]">
+              <div className="w-8 h-8 rounded-full bg-[#0088FF]/10 text-[#0088FF] flex items-center justify-center shrink-0">
                 <Clock className="w-4 h-4" />
               </div>
               On-Time Service
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-[#0F2537]">
-              <div className="w-7 h-7 rounded-full bg-[#0088FF]/10 text-[#0088FF] flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F2537]">
+              <div className="w-8 h-8 rounded-full bg-[#0088FF]/10 text-[#0088FF] flex items-center justify-center shrink-0">
                 <ThumbsUp className="w-4 h-4" />
               </div>
               Quality Assured
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-[#0F2537]">
-              <div className="w-7 h-7 rounded-full bg-[#0088FF]/10 text-[#0088FF] flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F2537]">
+              <div className="w-8 h-8 rounded-full bg-[#0088FF]/10 text-[#0088FF] flex items-center justify-center shrink-0">
                 <Lock className="w-4 h-4" />
               </div>
               Secure Payments
-            </div>
-          </div>
-        </div>
-
-        {/* Hero Vehicle Image Banner */}
-        <div className="relative w-full md:w-96 h-56 sm:h-64 rounded-3xl overflow-hidden shadow-lg border-2 border-white shrink-0 bg-gradient-to-br from-blue-500 to-blue-700">
-          <img
-            src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=800&auto=format&fit=crop&q=80"
-            alt="Doorstep Car and Bike Wash"
-            className="w-full h-full object-cover mix-blend-overlay opacity-90"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F2537]/80 via-transparent to-transparent flex items-end p-4 text-white">
-            <div>
-              <div className="text-xs font-black uppercase tracking-wider text-blue-300">Wipeit Doorstep Care</div>
-              <div className="text-sm font-bold">100% Eco-Friendly Water & Foam Wash</div>
             </div>
           </div>
         </div>
